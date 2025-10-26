@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Example: git config alias.stage-check '!tool/hooks/pre-stage "$@"'
+set -euo pipefail
+
+original_dir=$(pwd)
+trap 'cd "${original_dir}" || true' EXIT
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+
+dart format ./..
+
+flutter analyze
+
+flutter test
+
+go run ./tool/cmd/catalog
+
+git add "$@"

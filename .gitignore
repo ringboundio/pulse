@@ -1,0 +1,10 @@
+.*
+!.gitignore
+prof/
+build/
+android/
+ios/
+linux/
+macos/
+windows/
+web/
