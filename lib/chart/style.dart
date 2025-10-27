@@ -19,14 +19,14 @@ class ChartStyleKey {
 }
 
 class ChartPaintStyle {
-  ChartPaintStyle(
-    this.strokeColor,
-    this.strokeWidth,
-    this.strokeCap,
-    this.strokeJoin,
-    Float64List dashPattern,
-    this.fillColor,
-  ) : dashPattern = Float64List.fromList(dashPattern);
+  ChartPaintStyle({
+    required this.strokeColor,
+    required this.strokeWidth,
+    required this.strokeCap,
+    required this.strokeJoin,
+    required Float64List dashPattern,
+    required this.fillColor,
+  }) : dashPattern = Float64List.fromList(dashPattern);
 
   final Color strokeColor;
   final double strokeWidth;
@@ -68,7 +68,10 @@ class ChartStyleSheet {
     throw StateError('Missing style for key ${key.value}');
   }
 
-  ChartStyleSheet override(ChartStyleKey key, ChartPaintStyle style) {
+  ChartStyleSheet override({
+    required ChartStyleKey key,
+    required ChartPaintStyle style,
+  }) {
     final List<ChartStyleEntry> updated = <ChartStyleEntry>[];
     bool replaced = false;
     for (final ChartStyleEntry entry in entries) {

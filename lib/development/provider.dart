@@ -59,10 +59,10 @@ class DevelopmentBufferDataProvider extends BufferDataProvider {
       final double low = lowBase * (1.0 - random.nextDouble() * 0.0045);
 
       final double volume = _volumeForEpoch(
-        random,
-        baseVolume,
-        epochMicros,
-        symbol.value,
+        random: random,
+        baseVolume: baseVolume,
+        epochMicros: epochMicros,
+        symbol: symbol.value,
       );
 
       samples.add(
@@ -119,12 +119,12 @@ double _seasonalAdjustment(int epochMicros) {
   return intradayWave + weeklyWave;
 }
 
-double _volumeForEpoch(
-  Random random,
-  double baseVolume,
-  int epochMicros,
-  String symbol,
-) {
+double _volumeForEpoch({
+  required Random random,
+  required double baseVolume,
+  required int epochMicros,
+  required String symbol,
+}) {
   const int microsPerDay = 86400000000;
   final double phase = (epochMicros % microsPerDay).toDouble() / microsPerDay;
   final double openingRamp = 1.0 + 0.35 * exp(-phase * 6.0);

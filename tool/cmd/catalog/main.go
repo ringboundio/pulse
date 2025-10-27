@@ -61,7 +61,7 @@ func main() {
 	}
 
 	docPath := filepath.Join(root, "docs", "catalog.md")
-	if err := os.WriteFile(docPath, []byte(catalog), 0o644); err != nil {
+	if err := os.WriteFile(docPath, []byte(catalog), 0o600); err != nil {
 		fatal(err)
 	}
 	fmt.Printf("catalog written to %s\n", docPath)
@@ -321,6 +321,7 @@ func gatherEntries(root, libDir string) (map[string]*entry, []string, error) {
 func gatherUsage(root, libDir, testDir string) (map[string]bool, error) {
 	usage := make(map[string]bool)
 	usage["lib/main.dart"] = true
+	usage["lib/development/main.dart"] = true
 	process := func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err

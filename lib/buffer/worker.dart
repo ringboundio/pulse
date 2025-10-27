@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:isolate';
 
-import 'channel.dart';
+import 'package:pulse/buffer/channel.dart';
 
 class BufferWorkerBootstrap {
   const BufferWorkerBootstrap({

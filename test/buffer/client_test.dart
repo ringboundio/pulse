@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:pulse/buffer/channel.dart';
 import 'package:pulse/buffer/client.dart';
 

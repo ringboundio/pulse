@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'base.dart';
+import 'package:pulse/chart/foundation.dart';
 
 class ChartPoint {
   const ChartPoint(this.domain, this.measure);

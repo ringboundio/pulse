@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:isolate';
 
-import 'channel.dart';
-import 'worker.dart';
+import 'package:pulse/buffer/channel.dart';
+import 'package:pulse/buffer/worker.dart';
 
 abstract class BufferClient {
   Stream<BufferSamplesEvent> get samples;

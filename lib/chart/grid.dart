@@ -1,18 +1,18 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'base.dart';
-import 'style.dart';
+import 'package:pulse/chart/foundation.dart';
+import 'package:pulse/chart/style.dart';
 
 class ChartGridLayer extends ChartLayer {
   ChartGridLayer(
-    super.key,
-    Float32List domainLines,
-    Float32List measureLines,
-    this.domainStyleKey,
-    this.measureStyleKey,
-  ) : domainPositions = Float32List(domainLines.length),
-      measurePositions = Float32List(measureLines.length) {
+    super.key, {
+    required Float32List domainLines,
+    required Float32List measureLines,
+    required this.domainStyleKey,
+    required this.measureStyleKey,
+  }) : domainPositions = Float32List(domainLines.length),
+       measurePositions = Float32List(measureLines.length) {
     for (int i = 0; i < domainLines.length; i += 1) {
       domainPositions[i] = domainLines[i];
     }

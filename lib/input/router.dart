@@ -1,15 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 
-import 'package:pulse/input/focus_manager.dart';
-import 'package:pulse/input/gesture.dart';
-import 'package:pulse/input/input.dart';
-import 'package:pulse/input/keyboard.dart';
-import 'package:pulse/input/pointer.dart';
-import 'package:pulse/input/profile.dart';
+import 'package:pulse/input/core.dart';
+import 'package:pulse/input/manager.dart';
 
-class InputRouter implements InputRouterHandle {
-  InputRouter({required this.focusManager});
+class StandardInputRouter implements InputRouter {
+  StandardInputRouter({required this.focusManager});
 
   final InputFocusManager focusManager;
 

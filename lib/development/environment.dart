@@ -4,18 +4,16 @@ import 'package:flutter/widgets.dart';
 
 import 'package:pulse/buffer/channel.dart';
 import 'package:pulse/buffer/client.dart';
-import 'package:pulse/chart/base.dart';
 import 'package:pulse/chart/controller.dart';
 import 'package:pulse/chart/data.dart';
+import 'package:pulse/chart/foundation.dart';
 import 'package:pulse/chart/painter.dart';
 import 'package:pulse/development/charting.dart';
 import 'package:pulse/development/input_profiles.dart';
 import 'package:pulse/development/provider.dart';
 import 'package:pulse/development/viewport.dart';
-import 'package:pulse/input/focus_manager.dart';
-import 'package:pulse/input/input.dart';
-import 'package:pulse/input/keyboard.dart';
-import 'package:pulse/input/profile.dart';
+import 'package:pulse/input/core.dart';
+import 'package:pulse/input/manager.dart';
 import 'package:pulse/input/router.dart';
 
 class DevelopmentEnvironment {
@@ -48,7 +46,7 @@ class DevelopmentEnvironment {
   final ChartRenderer chartRenderer;
   final DevelopmentChartAssembler chartAssembler;
   final InputFocusManager focusManager;
-  final InputRouter router;
+  final StandardInputRouter router;
   final InputFocusNode rootInputFocus;
   final ShortcutsRegistry shortcuts;
   final FocusNode widgetFocusNode;
@@ -238,7 +236,9 @@ Future<DevelopmentEnvironment> buildDevelopmentEnvironment() async {
     rootNode: rootInputFocus,
     shortcuts: shortcuts,
   );
-  final InputRouter router = InputRouter(focusManager: focusManager);
+  final StandardInputRouter router = StandardInputRouter(
+    focusManager: focusManager,
+  );
 
   final DevelopmentEnvironment environment = DevelopmentEnvironment(
     viewport: viewport,

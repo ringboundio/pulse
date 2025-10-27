@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-import 'data.dart';
-import 'style.dart';
+import 'package:pulse/chart/data.dart';
+import 'package:pulse/chart/style.dart';
 
 class ChartController extends ChangeNotifier {
   ChartController(ChartSceneGraph initialGraph)
@@ -34,7 +34,10 @@ class ChartController extends ChangeNotifier {
     _advance();
   }
 
-  void overrideStyle(ChartStyleKey key, ChartPaintStyle style) {
+  void overrideStyle({
+    required ChartStyleKey key,
+    required ChartPaintStyle style,
+  }) {
     _graph = _graph.withStyleOverride(key, style);
     _advance();
   }

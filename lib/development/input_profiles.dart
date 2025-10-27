@@ -3,11 +3,8 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 
-import 'package:pulse/input/gesture.dart';
-import 'package:pulse/input/input.dart';
-import 'package:pulse/input/keyboard.dart';
-import 'package:pulse/input/pointer.dart';
 import 'package:pulse/development/viewport.dart';
+import 'package:pulse/input/core.dart';
 
 class DevelopmentKeyboardProfile extends KeyboardProfile {
   DevelopmentKeyboardProfile({required DevelopmentViewport viewport})

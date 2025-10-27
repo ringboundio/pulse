@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:pulse/input/input.dart';
-import 'package:pulse/input/keyboard.dart';
+import 'package:pulse/input/core.dart';
 
 // Shortcuts registry root scope must match root node id.
 class InputFocusManager extends ChangeNotifier {
@@ -61,7 +60,7 @@ class InputFocusManager extends ChangeNotifier {
   }
 
   InputDispatchContext createDispatchContext({
-    required InputRouterHandle router,
+    required InputRouter router,
     required InputFocusNode node,
   }) {
     return InputDispatchContext(

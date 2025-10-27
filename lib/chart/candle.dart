@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'base.dart';
-import 'node.dart';
+import 'package:pulse/chart/foundation.dart';
+import 'package:pulse/chart/node.dart';
 
 class ChartCandleLayer extends ChartLayer {
   ChartCandleLayer(super.key, List<ChartCandleNode> nodes)

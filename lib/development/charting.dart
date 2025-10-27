@@ -4,10 +4,10 @@ import 'dart:ui';
 
 import 'package:pulse/buffer/channel.dart';
 import 'package:pulse/chart/area.dart';
-import 'package:pulse/chart/base.dart';
 import 'package:pulse/chart/candle.dart';
 import 'package:pulse/chart/controller.dart';
 import 'package:pulse/chart/data.dart';
+import 'package:pulse/chart/foundation.dart';
 import 'package:pulse/chart/grid.dart';
 import 'package:pulse/chart/line.dart';
 import 'package:pulse/chart/node.dart';
@@ -41,78 +41,78 @@ class DevelopmentChartStyles {
       ChartStyleEntry(
         gridDomain,
         ChartPaintStyle(
-          const Color(0xFF2E3238),
-          1.0,
-          StrokeCap.butt,
-          StrokeJoin.miter,
-          dashedPattern,
-          const Color(0x002E3238),
+          strokeColor: const Color(0xFF2E3238),
+          strokeWidth: 1.0,
+          strokeCap: StrokeCap.butt,
+          strokeJoin: StrokeJoin.miter,
+          dashPattern: dashedPattern,
+          fillColor: const Color(0x002E3238),
         ),
       ),
       ChartStyleEntry(
         gridMeasure,
         ChartPaintStyle(
-          const Color(0xFF24272D),
-          1.0,
-          StrokeCap.butt,
-          StrokeJoin.miter,
-          dashedPattern,
-          const Color(0x0024272D),
+          strokeColor: const Color(0xFF24272D),
+          strokeWidth: 1.0,
+          strokeCap: StrokeCap.butt,
+          strokeJoin: StrokeJoin.miter,
+          dashPattern: dashedPattern,
+          fillColor: const Color(0x0024272D),
         ),
       ),
       ChartStyleEntry(
         candleBull,
         ChartPaintStyle(
-          const Color(0xFF4CAF50),
-          1.0,
-          StrokeCap.butt,
-          StrokeJoin.miter,
-          solidPattern,
-          const Color(0xBF4CAF50),
+          strokeColor: const Color(0xFF4CAF50),
+          strokeWidth: 1.0,
+          strokeCap: StrokeCap.butt,
+          strokeJoin: StrokeJoin.miter,
+          dashPattern: solidPattern,
+          fillColor: const Color(0xBF4CAF50),
         ),
       ),
       ChartStyleEntry(
         candleBear,
         ChartPaintStyle(
-          const Color(0xFFEF5350),
-          1.0,
-          StrokeCap.butt,
-          StrokeJoin.miter,
-          solidPattern,
-          const Color(0xBFEF5350),
+          strokeColor: const Color(0xFFEF5350),
+          strokeWidth: 1.0,
+          strokeCap: StrokeCap.butt,
+          strokeJoin: StrokeJoin.miter,
+          dashPattern: solidPattern,
+          fillColor: const Color(0xBFEF5350),
         ),
       ),
       ChartStyleEntry(
         closeLine,
         ChartPaintStyle(
-          const Color(0xFF42A5F5),
-          2.0,
-          StrokeCap.round,
-          StrokeJoin.round,
-          solidPattern,
-          const Color(0x0042A5F5),
+          strokeColor: const Color(0xFF42A5F5),
+          strokeWidth: 2.0,
+          strokeCap: StrokeCap.round,
+          strokeJoin: StrokeJoin.round,
+          dashPattern: solidPattern,
+          fillColor: const Color(0x0042A5F5),
         ),
       ),
       ChartStyleEntry(
         volumeArea,
         ChartPaintStyle(
-          const Color(0x3342A5F5),
-          1.0,
-          StrokeCap.butt,
-          StrokeJoin.miter,
-          solidPattern,
-          const Color(0x3342A5F5),
+          strokeColor: const Color(0x3342A5F5),
+          strokeWidth: 1.0,
+          strokeCap: StrokeCap.butt,
+          strokeJoin: StrokeJoin.miter,
+          dashPattern: solidPattern,
+          fillColor: const Color(0x3342A5F5),
         ),
       ),
       ChartStyleEntry(
         volumeBar,
         ChartPaintStyle(
-          const Color(0xFF39424A),
-          1.0,
-          StrokeCap.butt,
-          StrokeJoin.miter,
-          solidPattern,
-          const Color(0xFF39424A),
+          strokeColor: const Color(0xFF39424A),
+          strokeWidth: 1.0,
+          strokeCap: StrokeCap.butt,
+          strokeJoin: StrokeJoin.miter,
+          dashPattern: solidPattern,
+          fillColor: const Color(0xFF39424A),
         ),
       ),
     ];
@@ -232,10 +232,10 @@ class DevelopmentChartAssembler {
     builder.addLayer(_buildGridLayer(space));
     builder.addLayer(
       _buildVolumeLayer(
-        samples,
-        maxVolume,
-        space.measure.min,
-        space.measure.span,
+        samples: samples,
+        maxVolume: maxVolume,
+        baseline: space.measure.min,
+        measureSpan: space.measure.span,
       ),
     );
     builder.addLayer(_buildCandleLayer(samples));
@@ -261,19 +261,19 @@ class DevelopmentChartAssembler {
 
     return ChartGridLayer(
       _layerKeyGrid,
-      domainLines,
-      measureLines,
-      _styles.gridDomain,
-      _styles.gridMeasure,
+      domainLines: domainLines,
+      measureLines: measureLines,
+      domainStyleKey: _styles.gridDomain,
+      measureStyleKey: _styles.gridMeasure,
     );
   }
 
-  ChartLayer _buildVolumeLayer(
-    List<BufferSample> samples,
-    double maxVolume,
-    double baseline,
-    double measureSpan,
-  ) {
+  ChartLayer _buildVolumeLayer({
+    required List<BufferSample> samples,
+    required double maxVolume,
+    required double baseline,
+    required double measureSpan,
+  }) {
     if (samples.isEmpty) {
       final ChartPolylineGeometry emptyGeometry = ChartPolylineGeometry(
         Float32List(0),

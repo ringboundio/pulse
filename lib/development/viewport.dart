@@ -11,10 +11,10 @@ class DevelopmentViewport extends ChangeNotifier {
     required int initialWindowMicros,
   }) : _startMicros = initialStartMicros,
        _windowMicros = _clampWindow(
-         initialWindowMicros,
-         minWindowMicros,
-         maxWindowMicros,
-         intervalMicros,
+         window: initialWindowMicros,
+         minWindow: minWindowMicros,
+         maxWindow: maxWindowMicros,
+         interval: intervalMicros,
        );
 
   final int intervalMicros;
@@ -33,10 +33,10 @@ class DevelopmentViewport extends ChangeNotifier {
 
   void reset({required int startMicros, required int windowMicros}) {
     final int clampedWindow = _clampWindow(
-      windowMicros,
-      minWindowMicros,
-      maxWindowMicros,
-      intervalMicros,
+      window: windowMicros,
+      minWindow: minWindowMicros,
+      maxWindow: maxWindowMicros,
+      interval: intervalMicros,
     );
     final int clampedStart = startMicros >= 0 ? startMicros : 0;
     if (clampedStart == _startMicros && clampedWindow == _windowMicros) {
@@ -97,12 +97,12 @@ class DevelopmentViewport extends ChangeNotifier {
     notifyListeners();
   }
 
-  static int _clampWindow(
-    int window,
-    int minWindow,
-    int maxWindow,
-    int interval,
-  ) {
+  static int _clampWindow({
+    required int window,
+    required int minWindow,
+    required int maxWindow,
+    required int interval,
+  }) {
     final int minimumBase = max(interval, minWindow);
     final int maximumBase = max(minimumBase, maxWindow);
     int clamped = window;
@@ -117,10 +117,10 @@ class DevelopmentViewport extends ChangeNotifier {
 
   void _applyWindow(int candidate, {required double anchorMicros}) {
     final int clampedWindow = _clampWindow(
-      candidate,
-      minWindowMicros,
-      maxWindowMicros,
-      intervalMicros,
+      window: candidate,
+      minWindow: minWindowMicros,
+      maxWindow: maxWindowMicros,
+      interval: intervalMicros,
     );
     final double anchorRatio = _windowMicros > 0
         ? (anchorMicros - _startMicros) / _windowMicros

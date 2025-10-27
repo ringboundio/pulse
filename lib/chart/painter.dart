@@ -1,19 +1,19 @@
 import 'package:flutter/widgets.dart';
 
-import 'base.dart';
-import 'controller.dart';
-import 'data.dart';
+import 'package:pulse/chart/controller.dart';
+import 'package:pulse/chart/data.dart';
+import 'package:pulse/chart/foundation.dart';
 
 class ChartRenderer {
   const ChartRenderer();
 
-  void render(
-    Canvas canvas,
-    Size size,
-    ChartSceneGraph graph,
-    ChartPaintCache cache,
-    ChartScratchSpace scratchSpace,
-  ) {
+  void render({
+    required Canvas canvas,
+    required Size size,
+    required ChartSceneGraph graph,
+    required ChartPaintCache cache,
+    required ChartScratchSpace scratchSpace,
+  }) {
     final ChartSpace space = graph.scene.space;
     final ChartDoubleRange domain = space.domain;
     final ChartDoubleRange measure = space.measure;
@@ -24,21 +24,21 @@ class ChartRenderer {
     final double translateY = -measure.min * scaleY;
 
     final ChartTransform transform = ChartTransform(
-      scaleX,
-      translateX,
-      scaleY,
-      translateY,
-      size.height,
+      scaleX: scaleX,
+      translateX: translateX,
+      scaleY: scaleY,
+      translateY: translateY,
+      height: size.height,
     );
 
     final ChartRenderContext context = ChartRenderContext(
-      canvas,
-      size,
-      transform,
-      graph.styleSheet,
-      cache,
-      space.devicePixelRatio,
-      scratchSpace,
+      canvas: canvas,
+      size: size,
+      transform: transform,
+      styleSheet: graph.styleSheet,
+      paintCache: cache,
+      devicePixelRatio: space.devicePixelRatio,
+      scratchSpace: scratchSpace,
     );
 
     final List<ChartLayer> layers = graph.scene.layers;
@@ -83,7 +83,13 @@ class ChartSurfacePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final ChartSceneGraph graph = _controller.graph;
-    _renderer.render(canvas, size, graph, _cache, _scratch);
+    _renderer.render(
+      canvas: canvas,
+      size: size,
+      graph: graph,
+      cache: _cache,
+      scratchSpace: _scratch,
+    );
   }
 
   @override

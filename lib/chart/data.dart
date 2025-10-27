@@ -1,5 +1,5 @@
-import 'base.dart';
-import 'style.dart';
+import 'package:pulse/chart/foundation.dart';
+import 'package:pulse/chart/style.dart';
 
 class ChartDoubleRange {
   ChartDoubleRange(this.min, this.max) : assert(max > min);
@@ -42,7 +42,7 @@ class ChartSceneGraph {
   }
 
   ChartSceneGraph withStyleOverride(ChartStyleKey key, ChartPaintStyle style) {
-    return ChartSceneGraph(scene, styleSheet.override(key, style));
+    return ChartSceneGraph(scene, styleSheet.override(key: key, style: style));
   }
 }
 

@@ -8,12 +8,14 @@ trap 'cd "${original_dir}" || true' EXIT
 repo_root=$(git rev-parse --show-toplevel)
 cd "$repo_root"
 
+go test ./tool/...
+go run ./tool/cmd/import
+go run ./tool/cmd/catalog
+
 dart format ./..
 
-flutter analyze
-
-flutter test
-
-go run ./tool/cmd/catalog
+flutter pub get
+flutter analyze --no-pub
+flutter test --no-pub
 
 git add "$@"

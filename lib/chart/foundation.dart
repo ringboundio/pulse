@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'style.dart';
+import 'package:pulse/chart/style.dart';
 
 class ChartLayerKey {
   const ChartLayerKey(this.value);
@@ -38,13 +38,13 @@ class ChartNodeKey {
 }
 
 class ChartTransform {
-  const ChartTransform(
-    this.scaleX,
-    this.translateX,
-    this.scaleY,
-    this.translateY,
-    this.height,
-  );
+  const ChartTransform({
+    required this.scaleX,
+    required this.translateX,
+    required this.scaleY,
+    required this.translateY,
+    required this.height,
+  });
 
   final double scaleX;
   final double translateX;
@@ -84,15 +84,15 @@ class ChartScratchSpace {
 }
 
 class ChartRenderContext {
-  ChartRenderContext(
-    this.canvas,
-    this.size,
-    this.transform,
-    this.styleSheet,
-    this.paintCache,
-    this.devicePixelRatio,
-    this.scratchSpace,
-  );
+  ChartRenderContext({
+    required this.canvas,
+    required this.size,
+    required this.transform,
+    required this.styleSheet,
+    required this.paintCache,
+    required this.devicePixelRatio,
+    required this.scratchSpace,
+  });
 
   final Canvas canvas;
   final Size size;
@@ -104,7 +104,11 @@ class ChartRenderContext {
 }
 
 class ChartPaintBundle {
-  ChartPaintBundle(this.stroke, this.fill, this.dashPattern);
+  ChartPaintBundle({
+    required this.stroke,
+    required this.fill,
+    required this.dashPattern,
+  });
 
   final Paint stroke;
   final Paint fill;
@@ -130,7 +134,11 @@ class ChartPaintBundle {
       dashPattern[i] = style.dashPattern[i];
     }
 
-    return ChartPaintBundle(strokePaint, fillPaint, dashPattern);
+    return ChartPaintBundle(
+      stroke: strokePaint,
+      fill: fillPaint,
+      dashPattern: dashPattern,
+    );
   }
 }
 

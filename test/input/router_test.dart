@@ -2,12 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:pulse/input/focus_manager.dart';
-import 'package:pulse/input/gesture.dart';
-import 'package:pulse/input/input.dart';
-import 'package:pulse/input/keyboard.dart';
-import 'package:pulse/input/pointer.dart';
-import 'package:pulse/input/profile.dart';
+import 'package:pulse/input/core.dart';
+import 'package:pulse/input/manager.dart';
 import 'package:pulse/input/router.dart';
 
 class _TrackingKeyboardProfile extends KeyboardProfile {
@@ -108,7 +104,9 @@ void main() {
       rootNode: root,
       shortcuts: shortcuts,
     );
-    final InputRouter router = InputRouter(focusManager: focusManager);
+    final StandardInputRouter router = StandardInputRouter(
+      focusManager: focusManager,
+    );
 
     focusManager.requestFocus(node: root);
 
@@ -201,7 +199,9 @@ void main() {
       rootNode: root,
       shortcuts: shortcuts,
     );
-    final InputRouter router = InputRouter(focusManager: focusManager);
+    final StandardInputRouter router = StandardInputRouter(
+      focusManager: focusManager,
+    );
 
     focusManager.requestFocus(node: root);
     focusManager.requestFocus(node: secondary);
