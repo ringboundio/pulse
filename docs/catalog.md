@@ -1,6 +1,6 @@
 # Library Catalog
 
-Generated on 2025-10-27 14:34 UTC by `go run ./tool/cmd/catalog`.
+Generated on 2025-10-27 14:53 UTC by `go run ./tool/cmd/catalog`.
 
 _Legend: 🪦 unused file · ⚠️ deprecated symbol · 🧪 no dedicated test_
 
