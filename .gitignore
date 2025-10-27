@@ -1,5 +1,6 @@
 .*
 !.gitignore
+!.vscode/
 prof/
 build/
 android/
