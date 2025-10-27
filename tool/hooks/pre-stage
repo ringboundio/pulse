@@ -2,18 +2,30 @@
 # Example: git config alias.stage-check '!tool/hooks/pre-stage "$@"'
 set -euo pipefail
 
-original_dir=$(pwd)
-trap 'cd "${original_dir}" || true' EXIT
+originalDir=$(pwd)
+trap 'cd "${originalDir}" || true' EXIT
 
-repo_root=$(git rev-parse --show-toplevel)
-cd "$repo_root"
+repoRoot=$(git rev-parse --show-toplevel)
+cd "$repoRoot"
+
+go fmt ./tool/...
+go mod tidy
+goplsOut=$(gopls check -severity=hint $(find tool -name "*.go") 2>&1) || {
+  outStatus=$?
+  echo "$goplsOut" >&2
+  exit $outStatus
+}
+
+if [ -n "$goplsOut" ]; then
+  echo "$goplsOut" >&2
+  exit 1
+fi
 
 go test ./tool/...
 go run ./tool/cmd/import
 go run ./tool/cmd/catalog
 
 dart format ./..
-
 flutter pub get
 flutter analyze --no-pub
 flutter test --no-pub

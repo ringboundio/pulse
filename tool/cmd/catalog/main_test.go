@@ -7,7 +7,7 @@ func TestFindTestsMissingIntentCommentLinesHonorsComments(t *testing.T) {
 
 testWidgets('applies theme', (tester) async {});
 `
-	if got := findTestsMissingIntentCommentLines(content); len(got) != 0 {
+	if got := findTestsMissingIntentLines(content); len(got) != 0 {
 		t.Fatalf("expected no missing comments, got %v", got)
 	}
 }
@@ -17,7 +17,7 @@ func TestFindTestsMissingIntentCommentLinesDetectsMissing(t *testing.T) {
 // Explains why the widget test matters.
 testWidgets('second scenario', (tester) async {});
 `
-	got := findTestsMissingIntentCommentLines(content)
+	got := findTestsMissingIntentLines(content)
 	if len(got) != 1 {
 		t.Fatalf("expected 1 missing comment, got %v", got)
 	}
@@ -33,7 +33,7 @@ func TestFindTestsMissingIntentCommentLinesHandlesBlockComments(t *testing.T) {
 
 test('uses block comment', () {});
 `
-	if got := findTestsMissingIntentCommentLines(content); len(got) != 0 {
+	if got := findTestsMissingIntentLines(content); len(got) != 0 {
 		t.Fatalf("expected no missing comments, got %v", got)
 	}
 }
@@ -45,7 +45,7 @@ testWidgets<MyHarness>('generic widget scenario', (tester) async {});
 
 test('lacks explanation', () {});
 `
-	got := findTestsMissingIntentCommentLines(content)
+	got := findTestsMissingIntentLines(content)
 	if len(got) != 1 {
 		t.Fatalf("expected 1 missing comment, got %v", got)
 	}
