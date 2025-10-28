@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Example: git config alias.stage-check '!tool/hooks/pre-stage "$@"'
+# Example: git config alias.stage-check '!tool/hooks/pre-stage.sh "$@"'
 set -euo pipefail
 
 originalDir=$(pwd)
