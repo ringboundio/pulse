@@ -1,0 +1,39 @@
+Launching lib/development/bench/main.dart on Flutter test device in debug mode...
+
+Flutter run key commands.
+R Hot restart.
+h List all available interactive commands.
+c Clear the screen
+q Quit (terminate the application on the device).
+
+A Dart VM Service on Flutter test device is available at: http://127.0.0.1:36163/9DCTo2YyLHc=/
+[93mStarting benchmarks… this may take a few moments while we gather stable measurements.[0m
+
++--------------------------------------+------------+------------+--------------+--------------+------------+
+| benchmark                            | iterations |      total |        ns/op |        ops/s |        fps |
++--------------------------------------+------------+------------+--------------+--------------+------------+
+| chart/frame_composite_paint          |        448 |   633.73ms |    1414575.9 |          707 |      706.9 |
+| chart/candle_layer_paint             |       1802 |   753.93ms |     418384.0 |         2390 |     2390.1 |
+| chart/bar_layer_paint                |       4000 |      1.12s |     280357.3 |         3567 |     3566.9 |
+| buffer/worker_fetch_window           |       8109 |   979.77ms |     120824.8 |         8276 |            |
+| chart/area_write_fill                |       7143 |   626.74ms |      87741.6 |        11397 |            |
+| buffer/sample_store_trim_cycle       |       9091 |   613.58ms |      67493.3 |        14816 |            |
+| buffer/sample_store_merge            |       9864 |   605.20ms |      61354.4 |        16299 |            |
+| chart/polyline_write_path            |      13334 |   671.31ms |      50345.8 |        19863 |            |
+| buffer/channel_samples_event         |      26668 |      1.09s |      40838.9 |        24486 |            |
+| buffer/worker_policy_update          |      46154 |   679.89ms |      14730.9 |        67884 |            |
+| buffer/sample_store_extract          |     150000 |   773.92ms |       5159.5 |       193818 |            |
+| chart/polyline_from_points           |     536884 |      1.12s |       2084.6 |       479715 |            |
+| chart/paint_cache_miss               |    1453266 |   606.12ms |        417.1 |      2397658 |            |
+| input/router_route_key               |    2754653 |   601.18ms |        218.2 |      4582085 |            |
+| input/focus_manager_request          |    3165225 |   606.64ms |        191.7 |      5217616 |            |
+| input/router_route_scale_update      |    5030814 |   600.88ms |        119.4 |      8372355 |            |
+| input/router_route_pointer           |   12792724 |      1.20s |         94.2 |     10616421 |            |
+| input/profile_build_pointer_event    |    6848013 |   602.07ms |         87.9 |     11374209 |            |
+| input/settings_package_pan           |    7054951 |   611.53ms |         86.7 |     11536576 |            |
+| input/profile_build_scale_event      |   13773842 |      1.18s |         86.0 |     11631407 |            |
+| input/shortcuts_invoke               |    8552288 |   611.04ms |         71.4 |     13996350 |            |
+| chart/paint_cache_hit                |    8717552 |   608.17ms |         69.8 |     14334165 |            |
+| buffer/range_expand                  |    9477675 |   614.83ms |         64.9 |     15415090 |            |
++--------------------------------------+------------+------------+--------------+--------------+------------+
+Lost connection to device.

@@ -157,6 +157,11 @@ var typeMatchers = []typeMatcher{
 	}},
 }
 
+var allowedLibArtifacts = map[string]struct{}{
+	"lib/development/bench/run.sh":  {},
+	"lib/development/bench/out.txt": {},
+}
+
 func main() {
 	root, err := os.Getwd()
 	if err != nil {
@@ -460,6 +465,7 @@ func scanProjectDirectories(root string, anchors []string) (map[string]*entry, m
 	// seeds for usage
 	usage["lib/main.dart"] = true
 	usage["lib/development/main.dart"] = true
+	usage["lib/development/bench/main.dart"] = true
 	libTests := make(map[string][]string)
 	signatures := make(map[string][]string)
 	var stray []string
@@ -490,6 +496,9 @@ func scanProjectDirectories(root string, anchors []string) (map[string]*entry, m
 			rel := filepath.ToSlash(relativePath(root, path))
 			if filepath.Ext(path) != ".dart" {
 				if anchor == "lib" {
+					if _, ok := allowedLibArtifacts[rel]; ok {
+						return nil
+					}
 					unexpected = append(unexpected, rel)
 				}
 				return nil
