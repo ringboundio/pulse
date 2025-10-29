@@ -3,6 +3,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/services.dart';
 
+import 'allocation_tracker.dart';
+
 class BenchmarkConfig {
   const BenchmarkConfig({
     this.minIterations = 1,
@@ -50,11 +52,13 @@ class BenchmarkResult {
     required this.benchmark,
     required this.iterations,
     required this.elapsed,
+    this.allocations,
   });
 
   final BenchmarkDefinition benchmark;
   final int iterations;
   final Duration elapsed;
+  final AllocationSnapshot? allocations;
 
   double get nsPerOp {
     final double micros = elapsed.inMicroseconds.toDouble();
@@ -68,16 +72,29 @@ class BenchmarkResult {
     }
     return iterations / seconds;
   }
+
+  double? get bytesPerOp {
+    final AllocationSnapshot? snapshot = allocations;
+    if (snapshot == null) {
+      return null;
+    }
+    return snapshot.totalBytes / math.max(iterations, 1);
+  }
 }
 
 class BenchmarkRunner {
   const BenchmarkRunner({this.config = const BenchmarkConfig()});
 
   final BenchmarkConfig config;
+  static AllocationTracker? _allocationTracker;
+  static bool _allocationTrackerInitialized = false;
 
   Future<BenchmarkResult> run(BenchmarkDefinition benchmark) async {
     await _performWarmup(benchmark);
     await _triggerGCIfSupported();
+
+    final AllocationTracker? tracker = await _ensureAllocationTracker();
+    await tracker?.reset();
 
     int iterations = math.max(config.minIterations, 1);
     Duration elapsed = Duration.zero;
@@ -104,11 +121,23 @@ class BenchmarkRunner {
       );
     }
 
+    final AllocationSnapshot? allocations = await tracker?.collect();
+
     return BenchmarkResult(
       benchmark: benchmark,
       iterations: iterations,
       elapsed: elapsed,
+      allocations: allocations,
     );
+  }
+
+  Future<AllocationTracker?> _ensureAllocationTracker() async {
+    if (_allocationTrackerInitialized) {
+      return _allocationTracker;
+    }
+    _allocationTrackerInitialized = true;
+    _allocationTracker = await AllocationTracker.create();
+    return _allocationTracker;
   }
 
   Future<void> _performWarmup(BenchmarkDefinition benchmark) async {

@@ -1,0 +1,39 @@
+Launching development/bench/main.dart on Flutter test device in debug mode...
+
+Flutter run key commands.
+R Hot restart.
+h List all available interactive commands.
+c Clear the screen
+q Quit (terminate the application on the device).
+
+A Dart VM Service on Flutter test device is available at: http://127.0.0.1:41645/gXMkcP3KeG4=/
+[93mStarting benchmarks... this may take a few moments while we gather stable measurements.[0m
+
++--------------------------------------+------------+------------+--------------+--------------+--------------+------------+
+| benchmark                            | iterations |      total |        ns/op |     alloc/op |        ops/s |        fps |
++--------------------------------------+------------+------------+--------------+--------------+--------------+------------+
+| buffer/channel_samples_event         |      29182 |      1.18s |      40291.0 |       1.69KB |        24819 |            |
+| buffer/worker_fetch_window           |      28516 |      1.14s |      40063.8 |       2.26KB |        24960 |            |
+| chart/area_write_fill                |      28777 |   656.38ms |      22809.3 |       2.41KB |        43842 |            |
+| chart/polyline_write_path            |      50000 |   655.37ms |      13107.5 |       1.49KB |        76292 |            |
+| buffer/sample_store_trim_cycle       |      98078 |      1.17s |      11950.7 |         664B |        83677 |            |
+| buffer/worker_policy_update          |     122458 |      1.14s |       9277.6 |         595B |       107786 |            |
+| buffer/sample_store_merge            |     142228 |      1.17s |       8248.6 |         537B |       121232 |            |
+| chart/frame_composite_paint          |     220514 |      1.14s |       5179.1 |         287B |       193084 |   193083.9 |
+| chart/candle_layer_paint             |     198887 |   658.01ms |       3308.5 |         260B |       302255 |   302254.8 |
+| chart/bar_layer_paint                |     236038 |   612.90ms |       2596.6 |         263B |       385115 |   385114.8 |
+| chart/polyline_from_points           |     423618 |      1.05s |       2487.1 |         185B |       402080 |            |
+| chart/paint_cache_miss               |    2546244 |      1.12s |        438.9 |        29.0B |      2278310 |            |
+| input/router_route_key               |    5205624 |      1.09s |        208.6 |        14.6B |      4794646 |            |
+| input/focus_manager_request          |    6231878 |      1.14s |        182.6 |        12.0B |      5477500 |            |
+| input/router_route_scale_update      |   10520472 |      1.13s |        107.7 |        6.23B |      9287853 |            |
+| input/router_route_pointer           |   10260504 |      1.00s |         97.6 |        7.48B |     10247664 |            |
+| buffer/sample_store_extract          |   11111112 |   962.29ms |         86.6 |        5.88B |     11546484 |            |
+| input/settings_package_pan           |   13815336 |      1.09s |         79.1 |        4.92B |     12646276 |            |
+| input/profile_build_pointer_event    |   14295926 |      1.13s |         78.9 |        4.93B |     12680427 |            |
+| input/profile_build_scale_event      |   14307858 |      1.11s |         77.4 |        5.45B |     12922501 |            |
+| input/shortcuts_invoke               |   16420362 |      1.11s |         67.6 |        4.26B |     14792826 |            |
+| chart/paint_cache_hit                |   17269502 |      1.11s |         64.2 |        4.11B |     15575158 |            |
+| buffer/range_expand                  |   19062750 |      1.14s |         59.7 |        3.41B |     16761527 |            |
++--------------------------------------+------------+------------+--------------+--------------+--------------+------------+
+Lost connection to device.

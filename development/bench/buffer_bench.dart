@@ -5,8 +5,9 @@ import 'dart:isolate';
 import 'package:pulse/buffer/channel.dart';
 import 'package:pulse/buffer/sample_store.dart';
 import 'package:pulse/buffer/worker.dart';
-import 'package:pulse/development/bench/benchmark.dart';
-import 'package:pulse/development/bench/dataset.dart';
+
+import 'benchmark.dart';
+import 'dataset.dart';
 
 List<BenchmarkDefinition> buildBufferBenchmarks() {
   final BufferBenchmarkDataset data = bufferBenchmarkDataset;

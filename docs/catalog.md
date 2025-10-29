@@ -1,20 +1,20 @@
 <div style="font-size:2em;font-weight:bold;margin-bottom:0.5em;">Library Catalog</div>
 
-Generated on 2025-10-29 08:51 UTC by `go run ./tool/cmd/catalog`.
+Generated on 2025-10-29 11:38 UTC by `go run ./tool/cmd/catalog`.
 
 <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
   <tr>
     <td>
       <table class="catalog-table" style="width:100%">
         <colgroup>
-          <col class="col-status" style="width: 1.09%">
-          <col class="col-file" style="width: 14.29%">
-          <col class="col-public-types" style="width: 12.82%">
-          <col class="col-private-types" style="width: 11.72%">
-          <col class="col-public-funcs" style="width: 19.78%">
-          <col class="col-private-funcs" style="width: 17.58%">
-          <col class="col-file-test" style="width: 11.36%">
-          <col class="col-related-tests" style="width: 11.36%">
+          <col class="col-status" style="width: 1.16%">
+          <col class="col-file" style="width: 10.85%">
+          <col class="col-public-types" style="width: 13.18%">
+          <col class="col-private-types" style="width: 12.40%">
+          <col class="col-public-funcs" style="width: 20.93%">
+          <col class="col-private-funcs" style="width: 17.44%">
+          <col class="col-file-test" style="width: 12.02%">
+          <col class="col-related-tests" style="width: 12.02%">
         </colgroup>
         <thead>
           <tr>
@@ -70,13 +70,13 @@ Generated on 2025-10-29 08:51 UTC by `go run ./tool/cmd/catalog`.
           <td>—</td>
         </tr>
         <tr>
-          <td>🧪</td>
+          <td>—</td>
           <td><a href="../lib/chart/area.dart"><code>lib/chart/area.dart</code></a></td>
           <td><a href="../lib/chart/area.dart#L5"><code>class ChartAreaLayer</code></a></td>
           <td>—</td>
           <td><a href="../lib/chart/area.dart#L13"><code>ChartAreaLayer.paint()</code></a></td>
           <td>—</td>
-          <td>—</td>
+          <td><a href="../test/chart/area_test.dart"><code>test/chart/area_test.dart</code></a></td>
           <td>—</td>
         </tr>
         <tr>
@@ -90,13 +90,13 @@ Generated on 2025-10-29 08:51 UTC by `go run ./tool/cmd/catalog`.
           <td><a href="../test/chart/painter_test.dart"><code>test/chart/painter_test.dart</code></a></td>
         </tr>
         <tr>
-          <td>🧪</td>
+          <td>—</td>
           <td><a href="../lib/chart/candle.dart"><code>lib/chart/candle.dart</code></a></td>
           <td><a href="../lib/chart/candle.dart#L5"><code>class ChartCandleLayer</code></a></td>
           <td>—</td>
           <td><a href="../lib/chart/candle.dart#L13"><code>ChartCandleLayer.paint()</code></a></td>
           <td>—</td>
-          <td>—</td>
+          <td><a href="../test/chart/candle_test.dart"><code>test/chart/candle_test.dart</code></a></td>
           <td>—</td>
         </tr>
         <tr>
@@ -127,16 +127,16 @@ Generated on 2025-10-29 08:51 UTC by `go run ./tool/cmd/catalog`.
           <td><a href="../lib/chart/foundation.dart#L158"><code>ChartPaintBundle.strokePath()</code></a><br><a href="../lib/chart/foundation.dart#L176"><code>ChartPaintCache.resolve()</code></a><br><a href="../lib/chart/foundation.dart#L92"><code>ChartScratchSpace.reset()</code></a><br><a href="../lib/chart/foundation.dart#L77"><code>ChartTransform.project()</code></a><br><a href="../lib/chart/foundation.dart#L68"><code>ChartTransform.projectX()</code></a><br><a href="../lib/chart/foundation.dart#L72"><code>ChartTransform.projectY()</code></a></td>
           <td><a href="../lib/chart/foundation.dart#L7"><code>_noopPathPainter()</code></a><br><a href="../lib/chart/foundation.dart#L9"><code>_strokePainterFor()</code></a></td>
           <td><a href="../test/chart/foundation_test.dart"><code>test/chart/foundation_test.dart</code></a></td>
-          <td><a href="../test/chart/controller_test.dart"><code>test/chart/controller_test.dart</code></a><br><a href="../test/chart/node_test.dart"><code>test/chart/node_test.dart</code></a><br><a href="../test/chart/painter_test.dart"><code>test/chart/painter_test.dart</code></a></td>
+          <td><a href="../test/chart/area_test.dart"><code>test/chart/area_test.dart</code></a><br><a href="../test/chart/candle_test.dart"><code>test/chart/candle_test.dart</code></a><br><a href="../test/chart/controller_test.dart"><code>test/chart/controller_test.dart</code></a><br><a href="../test/chart/grid_test.dart"><code>test/chart/grid_test.dart</code></a><br><a href="../test/chart/node_test.dart"><code>test/chart/node_test.dart</code></a><br><a href="../test/chart/painter_test.dart"><code>test/chart/painter_test.dart</code></a></td>
         </tr>
         <tr>
-          <td>🧪</td>
+          <td>—</td>
           <td><a href="../lib/chart/grid.dart"><code>lib/chart/grid.dart</code></a></td>
           <td><a href="../lib/chart/grid.dart#L6"><code>class ChartGridLayer</code></a></td>
           <td>—</td>
           <td><a href="../lib/chart/grid.dart#L30"><code>ChartGridLayer.paint()</code></a></td>
           <td>—</td>
-          <td>—</td>
+          <td><a href="../test/chart/grid_test.dart"><code>test/chart/grid_test.dart</code></a></td>
           <td>—</td>
         </tr>
         <tr>
@@ -157,7 +157,7 @@ Generated on 2025-10-29 08:51 UTC by `go run ./tool/cmd/catalog`.
           <td><a href="../lib/chart/node.dart#L147"><code>ChartAreaNode.fillPathForTransform()</code></a><br><a href="../lib/chart/node.dart#L208"><code>ChartBarNode.pathForTransform()</code></a><br><a href="../lib/chart/node.dart#L269"><code>ChartCandleNode.bodyPathForTransform()</code></a><br><a href="../lib/chart/node.dart#L274"><code>ChartCandleNode.wickPathForTransform()</code></a><br><a href="../lib/chart/node.dart#L54"><code>ChartPolylineGeometry.dashedPathForTransform()</code></a><br><a href="../lib/chart/node.dart#L44"><code>ChartPolylineGeometry.pathForTransform()</code></a><br><a href="../lib/chart/node.dart#L49"><code>ChartPolylineGeometry.projectedPositionsForTransform()</code></a></td>
           <td><a href="../lib/chart/node.dart#L279"><code>ChartCandleNode._ensurePaths()</code></a><br><a href="../lib/chart/node.dart#L106"><code>ChartPolylineGeometry._buildDashedPath()</code></a><br><a href="../lib/chart/node.dart#L72"><code>ChartPolylineGeometry._ensureCache()</code></a></td>
           <td><a href="../test/chart/node_test.dart"><code>test/chart/node_test.dart</code></a></td>
-          <td><a href="../test/chart/controller_test.dart"><code>test/chart/controller_test.dart</code></a><br><a href="../test/chart/painter_test.dart"><code>test/chart/painter_test.dart</code></a></td>
+          <td><a href="../test/chart/area_test.dart"><code>test/chart/area_test.dart</code></a><br><a href="../test/chart/candle_test.dart"><code>test/chart/candle_test.dart</code></a><br><a href="../test/chart/controller_test.dart"><code>test/chart/controller_test.dart</code></a><br><a href="../test/chart/painter_test.dart"><code>test/chart/painter_test.dart</code></a></td>
         </tr>
         <tr>
           <td>—</td>
@@ -177,127 +177,7 @@ Generated on 2025-10-29 08:51 UTC by `go run ./tool/cmd/catalog`.
           <td><a href="../lib/chart/style.dart#L52"><code>ChartStyleSheet.contains()</code></a><br><a href="../lib/chart/style.dart#L61"><code>ChartStyleSheet.resolve()</code></a></td>
           <td>—</td>
           <td>—</td>
-          <td><a href="../test/chart/controller_test.dart"><code>test/chart/controller_test.dart</code></a><br><a href="../test/chart/foundation_test.dart"><code>test/chart/foundation_test.dart</code></a><br><a href="../test/chart/node_test.dart"><code>test/chart/node_test.dart</code></a><br><a href="../test/chart/painter_test.dart"><code>test/chart/painter_test.dart</code></a></td>
-        </tr>
-        <tr>
-          <td>🧪</td>
-          <td><a href="../lib/development/bench/benchmark.dart"><code>lib/development/bench/benchmark.dart</code></a></td>
-          <td><a href="../lib/development/bench/benchmark.dart#L5"><code>class BenchmarkConfig</code></a><br><a href="../lib/development/bench/benchmark.dart#L31"><code>class BenchmarkDefinition</code></a><br><a href="../lib/development/bench/benchmark.dart#L47"><code>class BenchmarkResult</code></a><br><a href="../lib/development/bench/benchmark.dart#L72"><code>class BenchmarkRunner</code></a><br><a href="../lib/development/bench/benchmark.dart#L28"><code>typedef BenchmarkBody</code></a><br><a href="../lib/development/bench/benchmark.dart#L25"><code>typedef BenchmarkSetup</code></a><br><a href="../lib/development/bench/benchmark.dart#L29"><code>typedef BenchmarkTag</code></a><br><a href="../lib/development/bench/benchmark.dart#L27"><code>typedef BenchmarkTeardown</code></a></td>
-          <td>—</td>
-          <td><a href="../lib/development/bench/benchmark.dart#L170"><code>blackHole()</code></a><br><a href="../lib/development/bench/benchmark.dart#L188"><code>drainBlackHole()</code></a></td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>🧪</td>
-          <td><a href="../lib/development/bench/buffer_bench.dart"><code>lib/development/bench/buffer_bench.dart</code></a></td>
-          <td>—</td>
-          <td><a href="../lib/development/bench/buffer_bench.dart#L167"><code>class _BufferWorkerHarness</code></a><br><a href="../lib/development/bench/buffer_bench.dart#L127"><code>class _DatasetBufferProvider</code></a><br><a href="../lib/development/bench/buffer_bench.dart#L150"><code>class _WindowToken</code></a></td>
-          <td><a href="../lib/development/bench/buffer_bench.dart#L10"><code>buildBufferBenchmarks()</code></a></td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>🧪</td>
-          <td><a href="../lib/development/bench/chart_bench.dart"><code>lib/development/bench/chart_bench.dart</code></a></td>
-          <td>—</td>
-          <td>—</td>
-          <td><a href="../lib/development/bench/chart_bench.dart#L12"><code>buildChartBenchmarks()</code></a></td>
-          <td><a href="../lib/development/bench/chart_bench.dart#L82"><code>createContext()</code></a></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>🧪</td>
-          <td><a href="../lib/development/bench/dataset.dart"><code>lib/development/bench/dataset.dart</code></a></td>
-          <td><a href="../lib/development/bench/dataset.dart#L169"><code>class BufferBenchmarkDataset</code></a><br><a href="../lib/development/bench/dataset.dart#L14"><code>class ChartBenchmarkDataset</code></a></td>
-          <td>—</td>
-          <td><a href="../lib/development/bench/dataset.dart#L202"><code>BufferBenchmarkDataset.createSampleStore()</code></a><br><a href="../lib/development/bench/dataset.dart#L65"><code>ChartBenchmarkDataset.createBarGeometry()</code></a><br><a href="../lib/development/bench/dataset.dart#L52"><code>ChartBenchmarkDataset.createBaselineGeometry()</code></a><br><a href="../lib/development/bench/dataset.dart#L61"><code>ChartBenchmarkDataset.createCandleGeometry()</code></a><br><a href="../lib/development/bench/dataset.dart#L48"><code>ChartBenchmarkDataset.createPolylineGeometry()</code></a></td>
-          <td><a href="../lib/development/bench/dataset.dart#L235"><code>BufferBenchmarkDataset._buildQueryRange()</code></a><br><a href="../lib/development/bench/dataset.dart#L208"><code>BufferBenchmarkDataset._buildSamples()</code></a><br><a href="../lib/development/bench/dataset.dart#L242"><code>BufferBenchmarkDataset._buildTrimRange()</code></a><br><a href="../lib/development/bench/dataset.dart#L122"><code>ChartBenchmarkDataset._buildBarBuffer()</code></a><br><a href="../lib/development/bench/dataset.dart#L95"><code>ChartBenchmarkDataset._buildCandleBuffer()</code></a><br><a href="../lib/development/bench/dataset.dart#L84"><code>ChartBenchmarkDataset._buildPolylineBuffer()</code></a><br><a href="../lib/development/bench/dataset.dart#L73"><code>ChartBenchmarkDataset._buildPolylinePoints()</code></a><br><a href="../lib/development/bench/dataset.dart#L141"><code>ChartBenchmarkDataset._buildStyleEntries()</code></a></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>🧪</td>
-          <td><a href="../lib/development/bench/input_bench.dart"><code>lib/development/bench/input_bench.dart</code></a></td>
-          <td>—</td>
-          <td><a href="../lib/development/bench/input_bench.dart#L231"><code>class _CountingKeyboardProfile</code></a><br><a href="../lib/development/bench/input_bench.dart#L260"><code>class _RecordingGestureProfile</code></a><br><a href="../lib/development/bench/input_bench.dart#L247"><code>class _RecordingPointerProfile</code></a></td>
-          <td><a href="../lib/development/bench/input_bench.dart#L8"><code>buildInputBenchmarks()</code></a></td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>🧪</td>
-          <td><a href="../lib/development/bench/main.dart"><code>lib/development/bench/main.dart</code></a></td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
-          <td><a href="../lib/development/bench/main.dart#L115"><code>_formatDuration()</code></a><br><a href="../lib/development/bench/main.dart#L45"><code>_printReport()</code></a><br><a href="../lib/development/bench/main.dart#L67"><code>repeat()</code></a><br><a href="../lib/development/bench/main.dart#L71"><code>separator()</code></a></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>🧪</td>
-          <td><a href="../lib/development/charting.dart"><code>lib/development/charting.dart</code></a></td>
-          <td><a href="../lib/development/charting.dart#L123"><code>class DevelopmentChartAssembler</code></a><br><a href="../lib/development/charting.dart#L15"><code>class DevelopmentChartStyles</code></a></td>
-          <td>—</td>
-          <td><a href="../lib/development/charting.dart#L151"><code>DevelopmentChartAssembler.bootstrapGraph()</code></a><br><a href="../lib/development/charting.dart#L161"><code>DevelopmentChartAssembler.styleSheet()</code></a><br><a href="../lib/development/charting.dart#L33"><code>DevelopmentChartStyles.sheet()</code></a></td>
-          <td><a href="../lib/development/charting.dart#L314"><code>DevelopmentChartAssembler._buildCandleLayer()</code></a><br><a href="../lib/development/charting.dart#L360"><code>DevelopmentChartAssembler._buildCloseLineLayer()</code></a><br><a href="../lib/development/charting.dart#L249"><code>DevelopmentChartAssembler._buildGridLayer()</code></a><br><a href="../lib/development/charting.dart#L381"><code>DevelopmentChartAssembler._determineHalfWidth()</code></a></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>🧪</td>
-          <td><a href="../lib/development/environment.dart"><code>lib/development/environment.dart</code></a></td>
-          <td><a href="../lib/development/environment.dart#L18"><code>class DevelopmentEnvironment</code></a></td>
-          <td>—</td>
-          <td><a href="../lib/development/environment.dart#L113"><code>DevelopmentEnvironment.dispose()</code></a><br><a href="../lib/development/environment.dart#L102"><code>DevelopmentEnvironment.updateDevicePixelRatio()</code></a></td>
-          <td><a href="../lib/development/environment.dart#L133"><code>DevelopmentEnvironment._handleLog()</code></a><br><a href="../lib/development/environment.dart#L123"><code>DevelopmentEnvironment._handleSamples()</code></a><br><a href="../lib/development/environment.dart#L128"><code>DevelopmentEnvironment._handleViewportChange()</code></a><br><a href="../lib/development/environment.dart#L144"><code>DevelopmentEnvironment._refreshChart()</code></a><br><a href="../lib/development/environment.dart#L137"><code>DevelopmentEnvironment._requestActiveRange()</code></a><br><a href="../lib/development/environment.dart#L222"><code>handleFocusGain()</code></a><br><a href="../lib/development/environment.dart#L224"><code>handleFocusLost()</code></a></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>🧪</td>
-          <td><a href="../lib/development/input_profiles.dart"><code>lib/development/input_profiles.dart</code></a></td>
-          <td><a href="../lib/development/input_profiles.dart#L164"><code>class DevelopmentGestureProfile</code></a><br><a href="../lib/development/input_profiles.dart#L8"><code>class DevelopmentKeyboardProfile</code></a><br><a href="../lib/development/input_profiles.dart#L106"><code>class DevelopmentPointerProfile</code></a></td>
-          <td>—</td>
-          <td>—</td>
-          <td><a href="../lib/development/input_profiles.dart#L14"><code>DevelopmentKeyboardProfile._createBindings()</code></a></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>🧪</td>
-          <td><a href="../lib/development/main.dart"><code>lib/development/main.dart</code></a></td>
-          <td><a href="../lib/development/main.dart#L19"><code>class DevelopmentApp</code></a><br><a href="../lib/development/main.dart#L43"><code>class DevelopmentShell</code></a></td>
-          <td><a href="../lib/development/main.dart#L121"><code>class _DevelopmentContent</code></a><br><a href="../lib/development/main.dart#L197"><code>class _DevelopmentMetric</code></a><br><a href="../lib/development/main.dart#L157"><code>class _DevelopmentStatusBar</code></a></td>
-          <td><a href="../lib/development/main.dart#L27"><code>DevelopmentApp.build()</code></a><br><a href="../lib/development/main.dart#L51"><code>DevelopmentShell.build()</code></a></td>
-          <td><a href="../lib/development/main.dart#L128"><code>_DevelopmentContent.build()</code></a><br><a href="../lib/development/main.dart#L205"><code>_DevelopmentMetric.build()</code></a><br><a href="../lib/development/main.dart#L164"><code>_DevelopmentStatusBar.build()</code></a></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>🧪</td>
-          <td><a href="../lib/development/provider.dart"><code>lib/development/provider.dart</code></a></td>
-          <td><a href="../lib/development/provider.dart#L5"><code>class DevelopmentBufferDataProvider</code></a></td>
-          <td>—</td>
-          <td>—</td>
-          <td><a href="../lib/development/provider.dart#L100"><code>_initialPriceForSymbol()</code></a><br><a href="../lib/development/provider.dart#L109"><code>_seasonalAdjustment()</code></a><br><a href="../lib/development/provider.dart#L86"><code>_seedForSymbol()</code></a></td>
-          <td>—</td>
-          <td>—</td>
-        </tr>
-        <tr>
-          <td>🧪</td>
-          <td><a href="../lib/development/viewport.dart"><code>lib/development/viewport.dart</code></a></td>
-          <td><a href="../lib/development/viewport.dart#L4"><code>class DevelopmentViewport</code></a></td>
-          <td>—</td>
-          <td><a href="../lib/development/viewport.dart#L88"><code>DevelopmentViewport.jumpToEnd()</code></a><br><a href="../lib/development/viewport.dart#L79"><code>DevelopmentViewport.scaleAround()</code></a><br><a href="../lib/development/viewport.dart#L62"><code>DevelopmentViewport.shiftByFraction()</code></a><br><a href="../lib/development/viewport.dart#L49"><code>DevelopmentViewport.shiftMicros()</code></a><br><a href="../lib/development/viewport.dart#L70"><code>DevelopmentViewport.zoomByFactor()</code></a></td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
+          <td><a href="../test/chart/area_test.dart"><code>test/chart/area_test.dart</code></a><br><a href="../test/chart/candle_test.dart"><code>test/chart/candle_test.dart</code></a><br><a href="../test/chart/controller_test.dart"><code>test/chart/controller_test.dart</code></a><br><a href="../test/chart/foundation_test.dart"><code>test/chart/foundation_test.dart</code></a><br><a href="../test/chart/grid_test.dart"><code>test/chart/grid_test.dart</code></a><br><a href="../test/chart/node_test.dart"><code>test/chart/node_test.dart</code></a><br><a href="../test/chart/painter_test.dart"><code>test/chart/painter_test.dart</code></a></td>
         </tr>
         <tr>
           <td>🧪</td>
@@ -361,7 +241,7 @@ Generated on 2025-10-29 08:51 UTC by `go run ./tool/cmd/catalog`.
             <td><span aria-hidden="true">&nbsp;</span></td>
             <td><span aria-hidden="true">&nbsp;</span></td>
             <td><span aria-hidden="true">&nbsp;</span></td>
-            <td><code>BufferSample materializeAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L140"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L226"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L413"><code>lib/buffer/sample_store.dart</code></a><br><code>Path pathForTransform(ChartTransform transform)</code><br>&nbsp;&nbsp;<a href="../lib/chart/node.dart#L208"><code>lib/chart/node.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/chart/node.dart#L44"><code>lib/chart/node.dart</code></a><br><code>Widget build(BuildContext context)</code><br>&nbsp;&nbsp;<a href="../lib/chart/painter.dart#L63"><code>lib/chart/painter.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/development/main.dart#L128"><code>lib/development/main.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/development/main.dart#L164"><code>lib/development/main.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/development/main.dart#L205"><code>lib/development/main.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/development/main.dart#L27"><code>lib/development/main.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/development/main.dart#L51"><code>lib/development/main.dart</code></a><br><code>double closeAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L187"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L220"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L270"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L407"><code>lib/buffer/sample_store.dart</code></a><br><code>double highAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L179"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L214"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L258"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L401"><code>lib/buffer/sample_store.dart</code></a><br><code>double lowAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L183"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L217"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L264"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L404"><code>lib/buffer/sample_store.dart</code></a><br><code>double openAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L175"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L211"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L252"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L398"><code>lib/buffer/sample_store.dart</code></a><br><code>double volumeAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L191"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L223"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L276"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L410"><code>lib/buffer/sample_store.dart</code></a><br><code>int epochMicrosAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L171"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L208"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L246"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L395"><code>lib/buffer/sample_store.dart</code></a><br><code>void clear()</code><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L37"><code>lib/buffer/sample_store.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/worker.dart#L248"><code>lib/buffer/worker.dart</code></a><br><code>void dispose()</code><br>&nbsp;&nbsp;<a href="../lib/buffer/client.dart#L174"><code>lib/buffer/client.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/development/environment.dart#L113"><code>lib/development/environment.dart</code></a><br><code>void main()</code><br>&nbsp;&nbsp;<a href="../test/buffer/channel_test.dart#L4"><code>test/buffer/channel_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/buffer/client_test.dart#L5"><code>test/buffer/client_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/controller_test.dart#L12"><code>test/chart/controller_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/foundation_test.dart#L8"><code>test/chart/foundation_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/node_test.dart#L9"><code>test/chart/node_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/painter_test.dart#L13"><code>test/chart/painter_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/input/router_test.dart#L71"><code>test/input/router_test.dart</code></a><br><code>void paint(ChartRenderContext context)</code><br>&nbsp;&nbsp;<a href="../lib/chart/area.dart#L13"><code>lib/chart/area.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/chart/bar.dart#L18"><code>lib/chart/bar.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/chart/candle.dart#L13"><code>lib/chart/candle.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/chart/grid.dart#L30"><code>lib/chart/grid.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/chart/line.dart#L13"><code>lib/chart/line.dart</code></a></td>
+            <td><code>BufferSample materializeAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L140"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L226"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L413"><code>lib/buffer/sample_store.dart</code></a><br><code>ChartRenderContext buildContext(PictureRecorder recorder)</code><br>&nbsp;&nbsp;<a href="../test/chart/area_test.dart#L36"><code>test/chart/area_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/candle_test.dart#L36"><code>test/chart/candle_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/grid_test.dart#L47"><code>test/chart/grid_test.dart</code></a><br><code>Path pathForTransform(ChartTransform transform)</code><br>&nbsp;&nbsp;<a href="../lib/chart/node.dart#L208"><code>lib/chart/node.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/chart/node.dart#L44"><code>lib/chart/node.dart</code></a><br><code>double closeAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L187"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L220"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L270"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L407"><code>lib/buffer/sample_store.dart</code></a><br><code>double highAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L179"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L214"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L258"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L401"><code>lib/buffer/sample_store.dart</code></a><br><code>double lowAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L183"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L217"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L264"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L404"><code>lib/buffer/sample_store.dart</code></a><br><code>double openAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L175"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L211"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L252"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L398"><code>lib/buffer/sample_store.dart</code></a><br><code>double volumeAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L191"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L223"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L276"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L410"><code>lib/buffer/sample_store.dart</code></a><br><code>int epochMicrosAt(int index)</code><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L171"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L208"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/channel.dart#L246"><code>lib/buffer/channel.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L395"><code>lib/buffer/sample_store.dart</code></a><br><code>void clear()</code><br>&nbsp;&nbsp;<a href="../lib/buffer/sample_store.dart#L37"><code>lib/buffer/sample_store.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/buffer/worker.dart#L248"><code>lib/buffer/worker.dart</code></a><br><code>void main()</code><br>&nbsp;&nbsp;<a href="../test/buffer/channel_test.dart#L4"><code>test/buffer/channel_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/buffer/client_test.dart#L5"><code>test/buffer/client_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/area_test.dart#L10"><code>test/chart/area_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/candle_test.dart#L10"><code>test/chart/candle_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/controller_test.dart#L12"><code>test/chart/controller_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/foundation_test.dart#L8"><code>test/chart/foundation_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/grid_test.dart#L9"><code>test/chart/grid_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/node_test.dart#L9"><code>test/chart/node_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/chart/painter_test.dart#L13"><code>test/chart/painter_test.dart</code></a><br>&nbsp;&nbsp;<a href="../test/input/router_test.dart#L71"><code>test/input/router_test.dart</code></a><br><code>void paint(ChartRenderContext context)</code><br>&nbsp;&nbsp;<a href="../lib/chart/area.dart#L13"><code>lib/chart/area.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/chart/bar.dart#L18"><code>lib/chart/bar.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/chart/candle.dart#L13"><code>lib/chart/candle.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/chart/grid.dart#L30"><code>lib/chart/grid.dart</code></a><br>&nbsp;&nbsp;<a href="../lib/chart/line.dart#L13"><code>lib/chart/line.dart</code></a></td>
           </tr>
         </tbody>
       </table>

@@ -1,10 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 
-import 'package:pulse/development/bench/benchmark.dart';
 import 'package:pulse/input/core.dart';
 import 'package:pulse/input/manager.dart';
 import 'package:pulse/input/router.dart';
+
+import 'benchmark.dart';
 
 List<BenchmarkDefinition> buildInputBenchmarks() {
   final InputSettings settings = InputSettings(

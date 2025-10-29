@@ -25,13 +25,13 @@
             "name": "pulse development",
             "request": "launch",
             "type": "dart",
-            "program": "lib/development/main.dart"
+            "program": "development/main.dart"
         },
         {
             "name": "pulse development (profile mode)",
             "request": "launch",
             "type": "dart",
-            "program": "lib/development/main.dart",
+            "program": "development/main.dart",
             "flutterMode": "profile"
         }
     ]

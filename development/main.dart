@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:pulse/chart/painter.dart';
-import 'package:pulse/development/environment.dart';
+
+import 'environment.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
