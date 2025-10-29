@@ -148,7 +148,7 @@ Future<void> main(List<String> args) async {
     buffer.writeln('# Positional parameter inventory');
     buffer.writeln();
     buffer.writeln(
-      '_Generated on ${DateTime.now().toUtc().toIso8601String()} using `tool/list_positional.dart`._',
+      '_Generated on ${DateTime.now().toUtc().toIso8601String()} using `tool/cmd/positional/main.dart`._',
     );
     buffer.writeln();
     buffer.writeln('- Total positional parameters: $entryCount');
@@ -178,7 +178,7 @@ Future<void> main(List<String> args) async {
     buffer.writeln('---');
     buffer.writeln();
     buffer.writeln(
-      'To regenerate this report, run `dart run tool/list_positional.dart --markdown > docs/positional.md`.',
+      'To regenerate this report, run `dart run tool/cmd/positional/main.dart --markdown > docs/positional.md`.',
     );
     stdout.writeln(buffer.toString());
   } else {

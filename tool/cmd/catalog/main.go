@@ -157,10 +157,7 @@ var typeMatchers = []typeMatcher{
 	}},
 }
 
-var allowedLibArtifacts = map[string]struct{}{
-	"lib/development/bench/run.sh":  {},
-	"lib/development/bench/out.txt": {},
-}
+var allowedLibArtifacts = map[string]struct{}{}
 
 func main() {
 	root, err := os.Getwd()
@@ -464,8 +461,6 @@ func scanProjectDirectories(root string, anchors []string) (map[string]*entry, m
 	usage := make(map[string]bool)
 	// seeds for usage
 	usage["lib/main.dart"] = true
-	usage["lib/development/main.dart"] = true
-	usage["lib/development/bench/main.dart"] = true
 	libTests := make(map[string][]string)
 	signatures := make(map[string][]string)
 	var stray []string

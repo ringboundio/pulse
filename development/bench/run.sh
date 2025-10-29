@@ -8,4 +8,4 @@ flutter run \
 	--no-dds \
 	--no-publish-port \
 	-d flutter-tester \
-	lib/development/bench/main.dart
+	development/bench/main.dart

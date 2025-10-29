@@ -17,10 +17,12 @@ const (
 	groupFlutter
 	groupPulse
 	groupOther
+	groupRelative
 )
 
 var directoryAnchors = []string{
 	"lib",
+	"development",
 	"test",
 	"tool",
 	"integration_test",
@@ -123,13 +125,17 @@ func processFile(root, path, rel string, graph dependencyGraph) (bool, error) {
 		return false, nil
 	}
 
-	for i := range entries {
-		if _, err := canonicalizeImport(root, path, &entries[i]); err != nil {
-			return false, err
+	inLib := strings.HasPrefix(rel, "lib/")
+
+	if inLib {
+		for i := range entries {
+			if _, err := canonicalizeImport(root, path, &entries[i]); err != nil {
+				return false, err
+			}
 		}
 	}
 
-	if strings.HasPrefix(rel, "lib/") {
+	if inLib {
 		graph.ensureNode(rel)
 		for _, entry := range entries {
 			if entry.group != groupPulse {
@@ -245,8 +251,10 @@ func classifyGroup(uri string) importGroup {
 		return groupFlutter
 	case strings.HasPrefix(uri, "package:pulse/"):
 		return groupPulse
-	default:
+	case strings.HasPrefix(uri, "package:"):
 		return groupOther
+	default:
+		return groupRelative
 	}
 }
 
@@ -257,7 +265,7 @@ func rebuildImportBlock(entries []importEntry) []string {
 	}
 
 	var result []string
-	order := []importGroup{groupDart, groupFlutter, groupPulse, groupOther}
+	order := []importGroup{groupDart, groupFlutter, groupPulse, groupOther, groupRelative}
 	for _, group := range order {
 		items := groups[group]
 		if len(items) == 0 {

@@ -7,8 +7,9 @@ import 'package:pulse/chart/foundation.dart';
 import 'package:pulse/chart/line.dart';
 import 'package:pulse/chart/node.dart';
 import 'package:pulse/chart/style.dart';
-import 'package:pulse/development/bench/benchmark.dart';
-import 'package:pulse/development/bench/dataset.dart';
+
+import 'benchmark.dart';
+import 'dataset.dart';
 
 List<BenchmarkDefinition> buildChartBenchmarks() {
   final ChartBenchmarkDataset data = chartBenchmarkDataset;

@@ -8,13 +8,14 @@ import 'package:pulse/chart/controller.dart';
 import 'package:pulse/chart/data.dart';
 import 'package:pulse/chart/foundation.dart';
 import 'package:pulse/chart/painter.dart';
-import 'package:pulse/development/charting.dart';
-import 'package:pulse/development/input_profiles.dart';
-import 'package:pulse/development/provider.dart';
-import 'package:pulse/development/viewport.dart';
 import 'package:pulse/input/core.dart';
 import 'package:pulse/input/manager.dart';
 import 'package:pulse/input/router.dart';
+
+import 'charting.dart';
+import 'input_profiles.dart';
+import 'provider.dart';
+import 'viewport.dart';
 
 class DevelopmentEnvironment {
   DevelopmentEnvironment({
