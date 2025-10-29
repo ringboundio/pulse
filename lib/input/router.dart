@@ -56,10 +56,11 @@ class StandardInputRouter implements InputRouter {
 
   @override
   bool dispatch({required InputEvent event}) {
-    final InputProfile profile = focusManager.activeNode.profile;
+    final InputFocusNode activeNode = focusManager.activeNode;
+    final InputProfile profile = activeNode.profile;
     final InputDispatchContext context = focusManager.createDispatchContext(
       router: this,
-      node: focusManager.activeNode,
+      node: activeNode,
     );
     if (event is PointerInputEvent) {
       return profile.pointer.handleEvent(event: event, context: context);

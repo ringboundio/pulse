@@ -164,13 +164,13 @@ class DevelopmentChartAssembler {
   }
 
   void updateGraph({
-    required List<BufferSample> samples,
+    required BufferSampleSeries series,
     required int viewportStartMicros,
     required int viewportEndMicros,
     required double devicePixelRatio,
   }) {
     final ChartSceneGraph graph = _buildGraph(
-      samples: samples,
+      series: series,
       viewportStartMicros: viewportStartMicros,
       viewportEndMicros: viewportEndMicros,
       devicePixelRatio: devicePixelRatio,
@@ -179,7 +179,7 @@ class DevelopmentChartAssembler {
   }
 
   ChartSceneGraph _buildGraph({
-    required List<BufferSample> samples,
+    required BufferSampleSeries series,
     required int viewportStartMicros,
     required int viewportEndMicros,
     required double devicePixelRatio,
@@ -194,16 +194,18 @@ class DevelopmentChartAssembler {
     double measureMin = double.infinity;
     double measureMax = double.negativeInfinity;
     double maxVolume = 0.0;
-    for (int index = 0; index < samples.length; index += 1) {
-      final BufferSample sample = samples[index];
-      if (sample.low < measureMin) {
-        measureMin = sample.low;
+    for (int index = 0; index < series.length; index += 1) {
+      final double low = series.lowAt(index);
+      if (low < measureMin) {
+        measureMin = low;
       }
-      if (sample.high > measureMax) {
-        measureMax = sample.high;
+      final double high = series.highAt(index);
+      if (high > measureMax) {
+        measureMax = high;
       }
-      if (sample.volume > maxVolume) {
-        maxVolume = sample.volume;
+      final double volume = series.volumeAt(index);
+      if (volume > maxVolume) {
+        maxVolume = volume;
       }
     }
 
@@ -232,14 +234,14 @@ class DevelopmentChartAssembler {
     builder.addLayer(_buildGridLayer(space));
     builder.addLayer(
       _buildVolumeLayer(
-        samples: samples,
+        series: series,
         maxVolume: maxVolume,
         baseline: space.measure.min,
         measureSpan: space.measure.span,
       ),
     );
-    builder.addLayer(_buildCandleLayer(samples));
-    builder.addLayer(_buildCloseLineLayer(samples));
+    builder.addLayer(_buildCandleLayer(series));
+    builder.addLayer(_buildCloseLineLayer(series));
 
     final ChartScene scene = builder.build();
     return ChartSceneGraph(scene, _styleSheet);
@@ -269,12 +271,12 @@ class DevelopmentChartAssembler {
   }
 
   ChartLayer _buildVolumeLayer({
-    required List<BufferSample> samples,
+    required BufferSampleSeries series,
     required double maxVolume,
     required double baseline,
     required double measureSpan,
   }) {
-    if (samples.isEmpty) {
+    if (series.isEmpty) {
       final ChartPolylineGeometry emptyGeometry = ChartPolylineGeometry(
         Float32List(0),
       );
@@ -289,11 +291,13 @@ class DevelopmentChartAssembler {
 
     final List<ChartPoint> points = <ChartPoint>[];
     final double amplitude = measureSpan > 0.0 ? measureSpan * 0.12 : 1.0;
-    for (int index = 0; index < samples.length; index += 1) {
-      final BufferSample sample = samples[index];
-      final double normalized = sample.volume / maxVolume;
+    for (int index = 0; index < series.length; index += 1) {
+      final double volume = series.volumeAt(index);
+      final double normalized = volume / maxVolume;
       final double measureValue = baseline + normalized * amplitude;
-      points.add(ChartPoint(sample.epochMicros.toDouble(), measureValue));
+      points.add(
+        ChartPoint(series.epochMicrosAt(index).toDouble(), measureValue),
+      );
     }
 
     final ChartPolylineGeometry geometry = ChartPolylineGeometry.fromPoints(
@@ -308,20 +312,19 @@ class DevelopmentChartAssembler {
     return ChartAreaLayer(_layerKeyVolume, <ChartAreaNode>[node]);
   }
 
-  ChartLayer _buildCandleLayer(List<BufferSample> samples) {
-    final double halfWidth = _determineHalfWidth(samples);
+  ChartLayer _buildCandleLayer(BufferSampleSeries series) {
+    final double halfWidth = _determineHalfWidth(series);
     final List<double> bullValues = <double>[];
     final List<double> bearValues = <double>[];
-    for (int index = 0; index < samples.length; index += 1) {
-      final BufferSample sample = samples[index];
-      final List<double> target = sample.close >= sample.open
-          ? bullValues
-          : bearValues;
-      target.add(sample.epochMicros.toDouble());
-      target.add(sample.open);
-      target.add(sample.high);
-      target.add(sample.low);
-      target.add(sample.close);
+    for (int index = 0; index < series.length; index += 1) {
+      final double open = series.openAt(index);
+      final double close = series.closeAt(index);
+      final List<double> target = close >= open ? bullValues : bearValues;
+      target.add(series.epochMicrosAt(index).toDouble());
+      target.add(open);
+      target.add(series.highAt(index));
+      target.add(series.lowAt(index));
+      target.add(close);
       target.add(halfWidth);
     }
 
@@ -355,11 +358,15 @@ class DevelopmentChartAssembler {
     return ChartCandleLayer(_layerKeyCandles, nodes);
   }
 
-  ChartLayer _buildCloseLineLayer(List<BufferSample> samples) {
+  ChartLayer _buildCloseLineLayer(BufferSampleSeries series) {
     final List<ChartPoint> points = <ChartPoint>[];
-    for (int index = 0; index < samples.length; index += 1) {
-      final BufferSample sample = samples[index];
-      points.add(ChartPoint(sample.epochMicros.toDouble(), sample.close));
+    for (int index = 0; index < series.length; index += 1) {
+      points.add(
+        ChartPoint(
+          series.epochMicrosAt(index).toDouble(),
+          series.closeAt(index),
+        ),
+      );
     }
     final ChartPolylineGeometry geometry = ChartPolylineGeometry.fromPoints(
       points,
@@ -372,17 +379,17 @@ class DevelopmentChartAssembler {
     return ChartLineLayer(_layerKeyLine, <ChartLineNode>[node]);
   }
 
-  double _determineHalfWidth(List<BufferSample> samples) {
-    if (samples.length < 2) {
+  double _determineHalfWidth(BufferSampleSeries series) {
+    if (series.length < 2) {
       return 0.4;
     }
     double totalInterval = 0.0;
-    for (int index = 1; index < samples.length; index += 1) {
-      final double previous = samples[index - 1].epochMicros.toDouble();
-      final double current = samples[index].epochMicros.toDouble();
+    for (int index = 1; index < series.length; index += 1) {
+      final double previous = series.epochMicrosAt(index - 1).toDouble();
+      final double current = series.epochMicrosAt(index).toDouble();
       totalInterval += current - previous;
     }
-    final double average = totalInterval / (samples.length - 1);
+    final double average = totalInterval / (series.length - 1);
     return max(0.4, average * 0.45);
   }
 }

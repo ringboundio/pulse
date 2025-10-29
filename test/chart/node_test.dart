@@ -34,7 +34,9 @@ void main() {
       translateY: 0.0,
       height: 100.0,
     );
-    node.writeFill(fill, transform);
+    fill
+      ..reset()
+      ..addPath(node.fillPathForTransform(transform), Offset.zero);
 
     final PathMetrics metrics = fill.computeMetrics();
     int closedCount = 0;

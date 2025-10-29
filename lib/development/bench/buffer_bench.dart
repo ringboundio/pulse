@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:isolate';
 
 import 'package:pulse/buffer/channel.dart';
@@ -51,10 +52,10 @@ List<BenchmarkDefinition> buildBufferBenchmarks() {
     BenchmarkDefinition(
       name: 'buffer/sample_store_extract',
       body: (_) {
-        final List<BufferSample> window = extractStore.extractWindow(
+        final BufferSampleSeries series = extractStore.extractSeries(
           queryRange,
         );
-        blackHole(window.length);
+        blackHole(series.length);
       },
     ),
     // Exercises trim cycles to ensure eviction math stays efficient under
@@ -83,10 +84,10 @@ List<BenchmarkDefinition> buildBufferBenchmarks() {
       name: 'buffer/worker_fetch_window',
       body: (_) async {
         final _BufferWorkerHarness harness = await workerHarnessFuture;
-        final List<BufferSample> fetched = await harness.requestRange(
+        final BufferSampleSeries series = await harness.requestRange(
           queryRange,
         );
-        blackHole(fetched.length);
+        blackHole(series.length);
       },
     ),
     // Sends policy updates to the worker so we keep tabs on control-plane
@@ -117,7 +118,7 @@ List<BenchmarkDefinition> buildBufferBenchmarks() {
         });
         sender.send(samplesEvent);
         final BufferSamplesEvent event = await received;
-        blackHole(event.samples.length);
+        blackHole(event.sampleCount);
         receiver.close();
       },
     ),
@@ -147,23 +148,41 @@ class _DatasetBufferProvider extends BufferDataProvider {
   }
 }
 
+class _WindowToken {
+  const _WindowToken(this.startMicros, this.endMicros);
+
+  final int startMicros;
+  final int endMicros;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _WindowToken &&
+        other.startMicros == startMicros &&
+        other.endMicros == endMicros;
+  }
+
+  @override
+  int get hashCode => Object.hash(startMicros, endMicros);
+}
+
 class _BufferWorkerHarness {
   _BufferWorkerHarness._({
     required SendPort commandPort,
-    required StreamController<BufferEvent> controller,
-    required StreamSubscription<dynamic> subscription,
-    required ReceivePort eventPort,
+    required RawReceivePort eventPort,
+    required Map<_WindowToken, ListQueue<Completer<BufferSamplesEvent>>>
+    pending,
+    required Completer<void> termination,
     required int generation,
   }) : _commandPort = commandPort,
-       _controller = controller,
-       _subscription = subscription,
        _eventPort = eventPort,
+       _pending = pending,
+       _termination = termination,
        _generation = generation;
 
   final SendPort _commandPort;
-  final StreamController<BufferEvent> _controller;
-  final StreamSubscription<dynamic> _subscription;
-  final ReceivePort _eventPort;
+  final RawReceivePort _eventPort;
+  final Map<_WindowToken, ListQueue<Completer<BufferSamplesEvent>>> _pending;
+  final Completer<void> _termination;
   int _generation;
   bool _isDisposed = false;
 
@@ -174,14 +193,47 @@ class _BufferWorkerHarness {
     required BufferConfig config,
     required BufferPolicy policy,
   }) async {
-    final ReceivePort eventPort = ReceivePort();
-    final StreamController<BufferEvent> controller =
-        StreamController<BufferEvent>.broadcast();
-    final StreamSubscription<dynamic> subscription = eventPort.listen((
-      dynamic message,
-    ) {
-      if (message is BufferEvent) {
-        controller.add(message);
+    final Map<_WindowToken, ListQueue<Completer<BufferSamplesEvent>>> pending =
+        <_WindowToken, ListQueue<Completer<BufferSamplesEvent>>>{};
+    final Completer<BufferReadyEvent> readyCompleter =
+        Completer<BufferReadyEvent>();
+    final Completer<void> termination = Completer<void>();
+    late RawReceivePort eventPort;
+    eventPort = RawReceivePort((Object? message) {
+      if (message is! BufferEvent) {
+        return;
+      }
+      switch (message) {
+        case BufferReadyEvent ready:
+          if (!readyCompleter.isCompleted) {
+            readyCompleter.complete(ready);
+          }
+          break;
+        case BufferSamplesEvent event:
+          final _WindowToken token = _WindowToken(
+            event.window.startMicros,
+            event.window.endMicros,
+          );
+          final ListQueue<Completer<BufferSamplesEvent>>? waiters =
+              pending[token];
+          if (waiters == null || waiters.isEmpty) {
+            return;
+          }
+          final Completer<BufferSamplesEvent> completer = waiters.removeFirst();
+          if (waiters.isEmpty) {
+            pending.remove(token);
+          }
+          if (!completer.isCompleted) {
+            completer.complete(event);
+          }
+          break;
+        case BufferTerminatedEvent _:
+          if (!termination.isCompleted) {
+            termination.complete();
+          }
+          break;
+        default:
+          break;
       }
     });
 
@@ -189,16 +241,13 @@ class _BufferWorkerHarness {
       BufferWorkerBootstrap(eventPort: eventPort.sendPort, provider: provider),
     );
 
-    final BufferReadyEvent ready = await controller.stream
-        .where((BufferEvent event) => event is BufferReadyEvent)
-        .cast<BufferReadyEvent>()
-        .first;
+    final BufferReadyEvent ready = await readyCompleter.future;
 
     final _BufferWorkerHarness harness = _BufferWorkerHarness._(
       commandPort: ready.commandPort,
-      controller: controller,
-      subscription: subscription,
       eventPort: eventPort,
+      pending: pending,
+      termination: termination,
       generation: 1,
     );
 
@@ -214,18 +263,21 @@ class _BufferWorkerHarness {
     return harness;
   }
 
-  Future<List<BufferSample>> requestRange(BufferRange window) async {
-    final Future<BufferSamplesEvent> response = _controller.stream
-        .where((BufferEvent event) => event is BufferSamplesEvent)
-        .cast<BufferSamplesEvent>()
-        .firstWhere(
-          (BufferSamplesEvent event) =>
-              event.window.startMicros == window.startMicros &&
-              event.window.endMicros == window.endMicros,
-        );
+  Future<BufferSampleSeries> requestRange(BufferRange window) async {
+    final _WindowToken token = _WindowToken(
+      window.startMicros,
+      window.endMicros,
+    );
+    final Completer<BufferSamplesEvent> completer =
+        Completer<BufferSamplesEvent>();
+    final ListQueue<Completer<BufferSamplesEvent>> waiters = _pending
+        .putIfAbsent(token, () {
+          return ListQueue<Completer<BufferSamplesEvent>>();
+        });
+    waiters.addLast(completer);
     _commandPort.send(BufferSendRangeCommand(window: window));
-    final BufferSamplesEvent event = await response;
-    return event.samples;
+    final BufferSamplesEvent event = await completer.future;
+    return event.series;
   }
 
   Future<void> setPolicy(BufferPolicy policy) async {
@@ -242,12 +294,17 @@ class _BufferWorkerHarness {
     }
     _isDisposed = true;
     _commandPort.send(BufferDisposeCommand(generation: _generation));
-    await _controller.stream
-        .where((BufferEvent event) => event is BufferTerminatedEvent)
-        .cast<BufferTerminatedEvent>()
-        .first;
-    await _subscription.cancel();
-    await _controller.close();
+    await _termination.future;
+    for (final ListQueue<Completer<BufferSamplesEvent>> waiters
+        in _pending.values) {
+      while (waiters.isNotEmpty) {
+        final Completer<BufferSamplesEvent> completer = waiters.removeFirst();
+        if (!completer.isCompleted) {
+          completer.completeError(StateError('Worker disposed'));
+        }
+      }
+    }
+    _pending.clear();
     _eventPort.close();
   }
 }

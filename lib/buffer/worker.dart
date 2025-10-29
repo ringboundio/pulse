@@ -47,6 +47,7 @@ class _BufferWorker {
   final BufferSampleStore _samples;
   final _ConfigState _configState;
   final _RangeSlot _lastRequest;
+  RawReceivePort? _commandReceivePort;
 
   BufferPolicy _policy;
   // Tracks the active configuration so background fetches can drop results
@@ -57,13 +58,15 @@ class _BufferWorker {
   bool _haloInFlight;
 
   void run() {
-    final ReceivePort commandReceive = ReceivePort();
+    final RawReceivePort commandReceive = RawReceivePort(_handleCommand);
+    _commandReceivePort = commandReceive;
     _eventPort.send(BufferReadyEvent(commandPort: commandReceive.sendPort));
-    commandReceive.listen((payload) {
-      if (payload is BufferCommand) {
-        _handlePayload(payload);
-      }
-    });
+  }
+
+  void _handleCommand(Object? payload) {
+    if (payload is BufferCommand) {
+      _handlePayload(payload);
+    }
   }
 
   void _handlePayload(BufferCommand payload) {
@@ -114,9 +117,8 @@ class _BufferWorker {
     _lastRequest.assign(window);
 
     if (_samples.covers(window)) {
-      final List<BufferSample> cached = _samples.extractWindow(window);
       _trimToRetention();
-      _emitSamples(window, cached);
+      _emitWindow(window);
       _scheduleHalo(window, config);
       return;
     }
@@ -124,24 +126,7 @@ class _BufferWorker {
     _coreInFlight = true;
     // Capture the active configuration revision to spot stale completions.
     final int requestGeneration = _generation;
-    Future<void>(() async {
-      final List<BufferSample> samples = await _provider.fetchRange(
-        symbol: config.symbol,
-        startMicros: window.startMicros,
-        endMicros: window.endMicros,
-        interval: config.interval,
-        endpoint: config.endpoint,
-      );
-      if (_isDisposed || requestGeneration != _generation) {
-        _coreInFlight = false;
-        return;
-      }
-      _samples.merge(samples);
-      _trimToRetention();
-      _coreInFlight = false;
-      _emitSamples(window, _samples.extractWindow(window));
-      _scheduleHalo(window, config);
-    });
+    unawaited(_fetchCoreRange(window, config, requestGeneration));
   }
 
   void _scheduleHalo(BufferRange window, BufferConfig config) {
@@ -154,26 +139,13 @@ class _BufferWorker {
     }
     _haloInFlight = true;
     final int requestGeneration = _generation;
-    Future<void>(() async {
-      final List<BufferSample> samples = await _provider.fetchRange(
-        symbol: config.symbol,
-        startMicros: halo.startMicros,
-        endMicros: halo.endMicros,
-        interval: config.interval,
-        endpoint: config.endpoint,
-      );
-      if (_isDisposed || requestGeneration != _generation) {
-        _haloInFlight = false;
-        return;
-      }
-      _samples.merge(samples);
-      _trimToRetention();
-      _haloInFlight = false;
-    });
+    unawaited(_fetchHaloRange(halo, config, requestGeneration));
   }
 
   void _handleDispose(BufferDisposeCommand command) {
     _isDisposed = true;
+    _commandReceivePort?.close();
+    _commandReceivePort = null;
     _eventPort.send(BufferTerminatedEvent(generation: command.generation));
   }
 
@@ -185,8 +157,67 @@ class _BufferWorker {
     _samples.trim(retention.startMicros, retention.endMicros);
   }
 
-  void _emitSamples(BufferRange window, List<BufferSample> samples) {
-    _eventPort.send(BufferSamplesEvent(window: window, samples: samples));
+  void _emitWindow(BufferRange window) {
+    final BufferSampleWindowEncoding? encoding = _samples.encodeWindow(window);
+    if (encoding == null) {
+      _eventPort.send(BufferSamplesEvent.empty(window: window));
+      return;
+    }
+    _eventPort.send(
+      BufferSamplesEvent.encoded(
+        window: window,
+        payload: encoding.payload,
+        sampleCount: encoding.count,
+      ),
+    );
+  }
+
+  Future<void> _fetchCoreRange(
+    BufferRange window,
+    BufferConfig config,
+    int requestGeneration,
+  ) async {
+    try {
+      final List<BufferSample> samples = await _provider.fetchRange(
+        symbol: config.symbol,
+        startMicros: window.startMicros,
+        endMicros: window.endMicros,
+        interval: config.interval,
+        endpoint: config.endpoint,
+      );
+      if (_isDisposed || requestGeneration != _generation) {
+        return;
+      }
+      _samples.merge(samples);
+      _trimToRetention();
+      _emitWindow(window);
+      _scheduleHalo(window, config);
+    } finally {
+      _coreInFlight = false;
+    }
+  }
+
+  Future<void> _fetchHaloRange(
+    BufferRange halo,
+    BufferConfig config,
+    int requestGeneration,
+  ) async {
+    try {
+      final List<BufferSample> samples = await _provider.fetchRange(
+        symbol: config.symbol,
+        startMicros: halo.startMicros,
+        endMicros: halo.endMicros,
+        interval: config.interval,
+        endpoint: config.endpoint,
+      );
+      if (_isDisposed || requestGeneration != _generation) {
+        return;
+      }
+      _samples.merge(samples);
+      _trimToRetention();
+    } finally {
+      _haloInFlight = false;
+    }
   }
 }
 

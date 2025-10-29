@@ -12,18 +12,15 @@ class ChartAreaLayer extends ChartLayer {
   @override
   void paint(ChartRenderContext context) {
     final Canvas canvas = context.canvas;
-    final Path fillPath = context.scratchSpace.primaryPath;
-    final Path strokePath = context.scratchSpace.secondaryPath;
+    final ChartTransform transform = context.transform;
     for (int i = 0; i < nodes.length; i += 1) {
       final ChartAreaNode node = nodes[i];
-      node.writeFill(fillPath, context.transform);
-      node.upper.writeToPath(strokePath, context.transform);
       final ChartPaintBundle bundle = context.paintCache.resolve(
         context.styleSheet,
         node.styleKey,
       );
-      canvas.drawPath(fillPath, bundle.fill);
-      canvas.drawPath(strokePath, bundle.stroke);
+      canvas.drawPath(node.fillPathForTransform(transform), bundle.fill);
+      bundle.strokePath(canvas, node.upper.pathForTransform(transform));
     }
   }
 }

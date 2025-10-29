@@ -28,7 +28,7 @@ class DevelopmentEnvironment {
     required this.rootInputFocus,
     required this.shortcuts,
     required this.widgetFocusNode,
-  }) : _samples = <BufferSample>[],
+  }) : _series = BufferSampleSeries.empty,
        _subscriptions = <StreamSubscription<dynamic>>[],
        _devicePixelRatio = 1.0,
        _initialized = false,
@@ -51,7 +51,7 @@ class DevelopmentEnvironment {
   final ShortcutsRegistry shortcuts;
   final FocusNode widgetFocusNode;
 
-  List<BufferSample> _samples;
+  BufferSampleSeries _series;
   final List<StreamSubscription<dynamic>> _subscriptions;
   double _devicePixelRatio;
   bool _initialized;
@@ -60,7 +60,7 @@ class DevelopmentEnvironment {
   BufferEndpoint _endpoint;
   BufferPolicy _policy;
 
-  int get sampleCount => _samples.length;
+  int get sampleCount => _series.length;
 
   BufferSymbol get symbol => _symbol;
 
@@ -122,7 +122,7 @@ class DevelopmentEnvironment {
   }
 
   void _handleSamples(BufferSamplesEvent event) {
-    _samples = List<BufferSample>.from(event.samples);
+    _series = event.series;
     _refreshChart();
   }
 
@@ -144,7 +144,7 @@ class DevelopmentEnvironment {
 
   void _refreshChart() {
     chartAssembler.updateGraph(
-      samples: _samples,
+      series: _series,
       viewportStartMicros: viewport.startMicros,
       viewportEndMicros: viewport.endMicros,
       devicePixelRatio: _devicePixelRatio,

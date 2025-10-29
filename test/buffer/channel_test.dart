@@ -20,8 +20,8 @@ void main() {
   });
 
   group('BufferSamplesEvent', () {
-    // Confirms BufferSamplesEvent exposes an immutable samples list.
-    test('samples list is unmodifiable', () {
+    // Confirms BufferSamplesEvent exposes series that mirror the source data.
+    test('series reflects provided samples', () {
       const window = BufferRange(startMicros: 0, endMicros: 10);
       final event = BufferSamplesEvent(
         window: window,
@@ -37,19 +37,34 @@ void main() {
         ],
       );
 
+      final BufferSampleSeries series = event.series;
+      expect(identical(series, event.series), isTrue);
+      expect(series.length, 1);
+      final BufferSample sample = series.materializeAt(0);
+      expect(sample.epochMicros, 1);
+      expect(sample.open, 1);
+      expect(sample.high, 1);
+      expect(sample.low, 1);
+      expect(sample.close, 1);
+      expect(sample.volume, 1);
+
+      final List<BufferSample> list = series.toList();
+      expect(list, hasLength(1));
       expect(
-        () => event.samples.add(
-          const BufferSample(
-            epochMicros: 2,
-            open: 2,
-            high: 2,
-            low: 2,
-            close: 2,
-            volume: 2,
-          ),
+        () => list[0] = const BufferSample(
+          epochMicros: 2,
+          open: 2,
+          high: 2,
+          low: 2,
+          close: 2,
+          volume: 2,
         ),
         throwsUnsupportedError,
       );
+      final BufferSample preserved = series.materializeAt(0);
+      expect(preserved.epochMicros, 1);
+      expect(preserved.open, 1);
+      expect(preserved.close, 1);
     });
   });
 }

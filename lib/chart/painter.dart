@@ -94,16 +94,9 @@ class ChartSurfacePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant ChartSurfacePainter oldDelegate) {
-    if (!identical(oldDelegate._renderer, _renderer)) {
-      return true;
-    }
-    if (!identical(oldDelegate._controller, _controller)) {
-      return true;
-    }
-    if (oldDelegate._controller.revision != _controller.revision) {
-      return true;
-    }
-    return false;
+    return !identical(oldDelegate._renderer, _renderer) ||
+        !identical(oldDelegate._controller, _controller) ||
+        oldDelegate._controller.revision != _controller.revision;
   }
 
   @override

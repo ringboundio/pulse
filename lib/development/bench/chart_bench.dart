@@ -109,8 +109,8 @@ List<BenchmarkDefinition> buildChartBenchmarks() {
     BenchmarkDefinition(
       name: 'chart/polyline_write_path',
       body: (_) {
-        polylineGeometry.writeToPath(scratch.primaryPath, transform);
-        blackHole(scratch.primaryPath.computeMetrics().length);
+        final Path path = polylineGeometry.pathForTransform(transform);
+        blackHole(path.computeMetrics().length);
       },
     ),
     // Generates the fill path for an area layer to track polygon generation
@@ -118,8 +118,8 @@ List<BenchmarkDefinition> buildChartBenchmarks() {
     BenchmarkDefinition(
       name: 'chart/area_write_fill',
       body: (_) {
-        areaNode.writeFill(scratch.secondaryPath, transform);
-        blackHole(scratch.secondaryPath.computeMetrics().length);
+        final Path fill = areaNode.fillPathForTransform(transform);
+        blackHole(fill.computeMetrics().length);
       },
     ),
     // Resolves styles from the paint cache with a hot key to ensure cache hits

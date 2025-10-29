@@ -51,7 +51,8 @@ void main() {
     final event = received.last;
     expect(event.window.startMicros, window.startMicros);
     expect(event.window.endMicros, window.endMicros);
-    expect(event.samples, orderedEquals(provider.samples));
+    expect(event.sampleCount, provider.samples.length);
+    _expectSamplesMatch(event.series.toList(), provider.samples);
   });
 }
 
@@ -83,5 +84,22 @@ class _RecordingBufferDataProvider extends BufferDataProvider {
     required BufferEndpoint endpoint,
   }) async {
     return samples;
+  }
+}
+
+void _expectSamplesMatch(
+  List<BufferSample> actual,
+  List<BufferSample> expected,
+) {
+  expect(actual, hasLength(expected.length));
+  for (int i = 0; i < expected.length; i += 1) {
+    final BufferSample actualSample = actual[i];
+    final BufferSample expectedSample = expected[i];
+    expect(actualSample.epochMicros, expectedSample.epochMicros);
+    expect(actualSample.open, expectedSample.open);
+    expect(actualSample.high, expectedSample.high);
+    expect(actualSample.low, expectedSample.low);
+    expect(actualSample.close, expectedSample.close);
+    expect(actualSample.volume, expectedSample.volume);
   }
 }

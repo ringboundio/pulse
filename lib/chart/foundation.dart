@@ -3,6 +3,17 @@ import 'dart:ui';
 
 import 'package:pulse/chart/style.dart';
 
+typedef ChartPathPainter = void Function(Canvas canvas, Path path);
+
+void _noopPathPainter(Canvas canvas, Path path) {}
+
+ChartPathPainter _strokePainterFor(Paint stroke) {
+  if (stroke.strokeWidth <= 0.0 || stroke.color.a == 0.0) {
+    return _noopPathPainter;
+  }
+  return (Canvas canvas, Path path) => canvas.drawPath(path, stroke);
+}
+
 class ChartLayerKey {
   const ChartLayerKey(this.value);
 
@@ -51,6 +62,9 @@ class ChartTransform {
   final double scaleY;
   final double translateY;
   final double height;
+
+  int get cacheKey =>
+      Object.hash(scaleX, translateX, scaleY, translateY, height);
 
   double projectX(double domain) {
     return (domain * scaleX) + translateX;
@@ -108,11 +122,15 @@ class ChartPaintBundle {
     required this.stroke,
     required this.fill,
     required this.dashPattern,
-  });
+    required ChartPathPainter strokePainter,
+  }) : _strokePainter = strokePainter;
 
   final Paint stroke;
   final Paint fill;
   final Float64List dashPattern;
+  final ChartPathPainter _strokePainter;
+
+  static final Float64List solidDashPattern = Float64List(0);
 
   factory ChartPaintBundle.fromStyle(ChartPaintStyle style) {
     final Paint strokePaint = Paint();
@@ -128,17 +146,18 @@ class ChartPaintBundle {
     fillPaint.style = PaintingStyle.fill;
     fillPaint.isAntiAlias = true;
 
-    final int dashLength = style.dashPattern.length;
-    final Float64List dashPattern = Float64List(dashLength);
-    for (int i = 0; i < dashLength; i += 1) {
-      dashPattern[i] = style.dashPattern[i];
-    }
-
     return ChartPaintBundle(
       stroke: strokePaint,
       fill: fillPaint,
-      dashPattern: dashPattern,
+      dashPattern: style.dashPattern.isEmpty
+          ? solidDashPattern
+          : Float64List.fromList(style.dashPattern),
+      strokePainter: _strokePainterFor(strokePaint),
     );
+  }
+
+  void strokePath(Canvas canvas, Path path) {
+    _strokePainter(canvas, path);
   }
 }
 
@@ -165,8 +184,9 @@ class ChartPaintCache {
         return entry.bundle;
       }
     }
-    final ChartPaintStyle style = sheet.resolve(key);
-    final ChartPaintBundle bundle = ChartPaintBundle.fromStyle(style);
+    final ChartPaintBundle bundle = ChartPaintBundle.fromStyle(
+      sheet.resolve(key),
+    );
     _entries.add(ChartPaintCacheEntry(key, bundle));
     return bundle;
   }

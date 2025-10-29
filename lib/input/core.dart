@@ -176,6 +176,7 @@ class InputSettings {
   final double zoomIntensity;
   final double scrubIntensity;
 
+  @pragma('vm:prefer-inline')
   OffsetPkg packagePan({
     required Offset delta,
     required double deviceUnit,
@@ -194,6 +195,7 @@ class InputSettings {
     );
   }
 
+  @pragma('vm:prefer-inline')
   ScalarPkg packageZoom({
     required double value,
     required double deviceUnit,
@@ -208,6 +210,7 @@ class InputSettings {
     );
   }
 
+  @pragma('vm:prefer-inline')
   ScalarPkg packageScalar({
     required double value,
     required double deviceUnit,

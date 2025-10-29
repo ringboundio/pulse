@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:pulse/chart/foundation.dart';
@@ -9,38 +8,52 @@ class ChartBarLayer extends ChartLayer {
     : nodes = List<ChartBarNode>.unmodifiable(nodes);
 
   final List<ChartBarNode> nodes;
+  late Picture _cachedPicture;
+  bool _hasCachedPicture = false;
+  int _cachedTransformKey = -1;
+  int _cachedStyleRevision = -1;
+  double _cachedDevicePixelRatio = double.nan;
 
   @override
   void paint(ChartRenderContext context) {
-    final Canvas canvas = context.canvas;
+    final int transformKey = context.transform.cacheKey;
+    final int styleRevision = context.styleSheet.revision;
+    final double devicePixelRatio = context.devicePixelRatio;
+    if (_hasCachedPicture &&
+        _cachedTransformKey == transformKey &&
+        _cachedStyleRevision == styleRevision &&
+        _cachedDevicePixelRatio == devicePixelRatio) {
+      context.canvas.drawPicture(_cachedPicture);
+      return;
+    }
+
+    final PictureRecorder recorder = PictureRecorder();
+    final Canvas recorderCanvas = Canvas(recorder);
+    _render(recorderCanvas, context);
+
+    if (_hasCachedPicture) {
+      _cachedPicture.dispose();
+    }
+    _cachedPicture = recorder.endRecording();
+    _hasCachedPicture = true;
+    _cachedTransformKey = transformKey;
+    _cachedStyleRevision = styleRevision;
+    _cachedDevicePixelRatio = devicePixelRatio;
+
+    context.canvas.drawPicture(_cachedPicture);
+  }
+
+  void _render(Canvas canvas, ChartRenderContext context) {
     final ChartTransform transform = context.transform;
-    final ChartScratchSpace scratch = context.scratchSpace;
     for (int i = 0; i < nodes.length; i += 1) {
       final ChartBarNode node = nodes[i];
       final ChartPaintBundle bundle = context.paintCache.resolve(
         context.styleSheet,
         node.styleKey,
       );
-      final Float32List values = node.geometry.values;
-      for (int j = 0; j < values.length; j += 4) {
-        final double centerDomain = values[j];
-        final double lowMeasure = values[j + 1];
-        final double highMeasure = values[j + 2];
-        final double halfWidth = values[j + 3];
-
-        final double centerX = transform.projectX(centerDomain);
-        final double halfWidthPixels = halfWidth * transform.scaleX;
-        final double left = centerX - halfWidthPixels;
-        final double right = centerX + halfWidthPixels;
-        final double top = transform.projectY(highMeasure);
-        final double bottom = transform.projectY(lowMeasure);
-
-        scratch.rect = Rect.fromLTRB(left, top, right, bottom);
-        canvas.drawRect(scratch.rect, bundle.fill);
-        if (bundle.stroke.strokeWidth > 0.0) {
-          canvas.drawRect(scratch.rect, bundle.stroke);
-        }
-      }
+      final Path barPath = node.pathForTransform(transform);
+      canvas.drawPath(barPath, bundle.fill);
+      bundle.strokePath(canvas, barPath);
     }
   }
 }
